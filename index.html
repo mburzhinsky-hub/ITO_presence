@@ -256,15 +256,9 @@ a{color:inherit;text-decoration:none}
 .form-grid.form-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .form-grid .field--full{grid-column:1/-1}
 .checkbox-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.stage-assign-editor{border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg,#fff,#f8fbff);padding:16px;display:flex;flex-direction:column;gap:14px}
-.stage-assign-editor__head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.stage-assign-editor__summary{display:flex;flex-wrap:wrap;gap:8px}
-.stage-assign-list{display:flex;flex-direction:column;gap:12px}
-.stage-assign-card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 20px rgba(15,23,42,.05)}
-.stage-assign-card__head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
-.stage-assign-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.stage-assign-grid .field--wide{grid-column:span 2}
-.stage-assign-empty{padding:18px;border:1px dashed var(--border-strong);border-radius:14px;background:#fff;color:var(--muted);line-height:1.6}
+.check-card{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff;cursor:pointer}
+.check-card input{margin-top:3px}
+.check-card__meta{display:flex;flex-direction:column;gap:4px}
 .modal__footer{padding:18px 22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .toast-root{position:fixed;top:22px;right:22px;z-index:80;display:flex;flex-direction:column;gap:10px}
 .toast{background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;min-width:300px;max-width:420px}
@@ -291,50 +285,14 @@ a{color:inherit;text-decoration:none}
   .split,.split-2{grid-template-columns:1fr}
   .cards-grid,.cards-grid.cards-grid--4{grid-template-columns:1fr}
   .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .scroll-sync-hint{display:none}
 }
 @media (max-width: 940px){
   .app-shell{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
   .topbar{padding-top:16px}
-  .form-grid,.form-grid.form-grid--3,.checkbox-grid,.stage-assign-grid{grid-template-columns:1fr}
+  .form-grid,.form-grid.form-grid--3,.checkbox-grid{grid-template-columns:1fr}
   .presence-table .sticky-col-2{left:180px}
 }
-
-.scroll-sync-shell{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;--scroll-shadow-top:0px}
-.scroll-sync-toolbar{
-  display:none;position:sticky;top:8px;z-index:6;align-items:center;gap:8px;padding:6px 10px;
-  border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 8px 18px rgba(15,23,42,.08)
-}
-.scroll-sync-shell.has-horizontal-scroll .scroll-sync-toolbar{display:flex}
-.scroll-sync-hint{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
-.scroll-shift-btn{width:34px;height:34px;padding:0;flex:none}
-.scroll-shift-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
-.scroll-sync-top{
-  flex:1;min-width:140px;overflow-x:auto;overflow-y:hidden;height:18px;min-height:18px;
-  border:1px solid var(--border);border-radius:999px;background:linear-gradient(180deg,#f8fafc,#e9f0fa);box-shadow:inset 0 1px 0 rgba(255,255,255,.75)
-}
-.scroll-sync-top__inner{height:1px}
-.scroll-sync-main{min-width:0;scrollbar-gutter:stable both-edges;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
-.scroll-sync-shell::before,.scroll-sync-shell::after{
-  content:'';position:absolute;top:var(--scroll-shadow-top);bottom:0;width:22px;pointer-events:none;opacity:0;transition:opacity .18s ease;z-index:4
-}
-.scroll-sync-shell::before{left:0;background:linear-gradient(90deg,rgba(244,247,251,.98),rgba(244,247,251,0))}
-.scroll-sync-shell::after{right:0;background:linear-gradient(270deg,rgba(244,247,251,.98),rgba(244,247,251,0))}
-.scroll-sync-shell.can-scroll-left::before{opacity:1}
-.scroll-sync-shell.can-scroll-right::after{opacity:1}
-.table-wrap,.heatmap-wrap,.gantt-shell,.scroll-sync-top{
-  scrollbar-width:thin;scrollbar-color:#94a3b8 #e6edf7;
-}
-.table-wrap::-webkit-scrollbar,.heatmap-wrap::-webkit-scrollbar,.gantt-shell::-webkit-scrollbar,.scroll-sync-top::-webkit-scrollbar{height:14px;width:12px}
-.table-wrap::-webkit-scrollbar-track,.heatmap-wrap::-webkit-scrollbar-track,.gantt-shell::-webkit-scrollbar-track,.scroll-sync-top::-webkit-scrollbar-track{
-  background:#e6edf7;border-radius:999px
-}
-.table-wrap::-webkit-scrollbar-thumb,.heatmap-wrap::-webkit-scrollbar-thumb,.gantt-shell::-webkit-scrollbar-thumb,.scroll-sync-top::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg,#94a3b8,#64748b);border-radius:999px;border:3px solid #e6edf7
-}
-.table-wrap::-webkit-scrollbar-corner,.heatmap-wrap::-webkit-scrollbar-corner,.gantt-shell::-webkit-scrollbar-corner,.scroll-sync-top::-webkit-scrollbar-corner{background:#e6edf7}
-
 </style>
 </head>
 <body>
@@ -387,8 +345,8 @@ a{color:inherit;text-decoration:none}
 const INITIAL_DATA = {
   "meta": {
     "title": "Планирование ресурсов инженерной команды",
-    "snapshotDate": "2026-04-10",
-    "presenceHorizonStart": "2026-04-01",
+    "snapshotDate": "2026-04-09",
+    "presenceHorizonStart": "2026-04-08",
     "unfixedRuleStart": "2026-04-13",
     "presenceHorizonEnd": "2026-12-31",
     "source": "Excel + должностные инструкции",
@@ -402,11 +360,10 @@ const INITIAL_DATA = {
     "Завершен"
   ],
   "stageStatuses": [
-    "Запланирован",
+    "Запланировано",
     "В работе",
-    "Просрочен",
-    "Пауза",
-    "Завершен"
+    "Просрочено",
+    "Завершено"
   ],
   "riskStatuses": [
     "Норма",
@@ -634,13 +591,6 @@ const INITIAL_DATA = {
       "name": "Отдел/ бизнес-юнит",
       "priority": "Средний",
       "status": "Активный"
-    },
-    {
-      "id": "П-011",
-      "name": "Позиция 11 — не заполнена в Excel",
-      "priority": "Низкий",
-      "status": "Пауза",
-      "isPlaceholder": true
     },
     {
       "id": "П-012",
@@ -1049,7 +999,7 @@ const INITIAL_DATA = {
       "startDate": "2026-02-17",
       "endDate": "2026-04-16",
       "plannedLoadPct": 100,
-      "status": "Запланирован",
+      "status": "Запланировано",
       "templateId": "T002",
       "leadRole": "Проектировщик",
       "supportRole": "ГИП",
@@ -1081,7 +1031,7 @@ const INITIAL_DATA = {
       "startDate": "2026-03-11",
       "endDate": "2026-03-20",
       "plannedLoadPct": 20,
-      "status": "Просрочен",
+      "status": "Просрочено",
       "templateId": "T004",
       "leadRole": "Проектировщик",
       "supportRole": "Закупщик",
@@ -1145,7 +1095,7 @@ const INITIAL_DATA = {
       "startDate": "2025-12-12",
       "endDate": "2026-04-17",
       "plannedLoadPct": 0,
-      "status": "Запланирован",
+      "status": "Запланировано",
       "templateId": "T003",
       "leadRole": "ГИП",
       "supportRole": "Проектировщик",
@@ -1193,7 +1143,7 @@ const INITIAL_DATA = {
       "startDate": "2026-04-06",
       "endDate": "2026-04-16",
       "plannedLoadPct": 0,
-      "status": "Запланирован",
+      "status": "Запланировано",
       "templateId": "T003",
       "leadRole": "ГИП",
       "supportRole": "Проектировщик",
@@ -1241,7 +1191,7 @@ const INITIAL_DATA = {
       "startDate": "2026-02-06",
       "endDate": "2026-03-31",
       "plannedLoadPct": 10,
-      "status": "Просрочен",
+      "status": "Просрочено",
       "templateId": "T012",
       "leadRole": "Старший инженер",
       "supportRole": "Инженер",
@@ -1273,7 +1223,7 @@ const INITIAL_DATA = {
       "startDate": "2026-04-08",
       "endDate": "2026-04-10",
       "plannedLoadPct": 100,
-      "status": "Запланирован",
+      "status": "Запланировано",
       "templateId": "T007",
       "leadRole": "Старший инженер",
       "supportRole": "Инженер",
@@ -1305,7 +1255,7 @@ const INITIAL_DATA = {
       "startDate": "2026-01-16",
       "endDate": "2026-03-31",
       "plannedLoadPct": 10,
-      "status": "Просрочен",
+      "status": "Просрочено",
       "templateId": "T004",
       "leadRole": "Проектировщик",
       "supportRole": "Закупщик",
@@ -1709,14 +1659,10 @@ const INITIAL_DATA = {
   ]
 };
 
-const STORAGE_KEY = 'resource-planner-static-v3';
-const APP_EXPORT_VERSION = 3;
+const STORAGE_KEY = 'resource-planner-static-v1';
+const APP_EXPORT_VERSION = 1;
 const ESCAPE_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
 const chartRegistry = [];
-const SEARCH_UI_KEYS = new Set(['projectsSearch', 'projectStageSearch', 'teamSearch', 'rolesSearch']);
-let uiRenderTimer = null;
-let pendingUiFocusRestore = null;
-let stageDraftSequence = 1;
 
 const ui = {
   view: 'projects',
@@ -1781,7 +1727,6 @@ function bindGlobalEvents(){
       closeModal();
     }
   });
-  window.addEventListener('resize', scheduleEnhanceScrollAreas, { passive: true });
   DOM.importInput.addEventListener('change', async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -1807,51 +1752,6 @@ function esc(value){
 function safeText(value, fallback='—'){
   const text = value === undefined || value === null || value === '' ? fallback : String(value);
   return esc(text);
-}
-
-function normalizeSearchText(value){
-  return String(value ?? '')
-    .toLowerCase()
-    .replace(/ё/g, 'е')
-    .replace(/[\/_.,;:!?()[\]{}"'`«»#+*=|\\-]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function textMatchesSearch(haystack, query){
-  const normalizedQuery = normalizeSearchText(query);
-  if (!normalizedQuery) return true;
-  const normalizedHaystack = normalizeSearchText(haystack);
-  if (!normalizedHaystack) return false;
-  if (normalizedHaystack.includes(normalizedQuery)) return true;
-  return normalizedQuery.split(' ').every((part) => normalizedHaystack.includes(part));
-}
-
-function scheduleUiRender(target){
-  pendingUiFocusRestore = {
-    uiKey: target.dataset.uiKey || '',
-    selectionStart: typeof target.selectionStart === 'number' ? target.selectionStart : null,
-    selectionEnd: typeof target.selectionEnd === 'number' ? target.selectionEnd : null
-  };
-  if (uiRenderTimer) clearTimeout(uiRenderTimer);
-  uiRenderTimer = setTimeout(() => {
-    uiRenderTimer = null;
-    renderApp();
-  }, 220);
-}
-
-function restorePendingUiFocus(){
-  if (!pendingUiFocusRestore?.uiKey) return;
-  const focusState = pendingUiFocusRestore;
-  pendingUiFocusRestore = null;
-  const input = document.querySelector(`[data-ui-key="${focusState.uiKey}"]`);
-  if (!input) return;
-  input.focus({ preventScroll: true });
-  if (typeof focusState.selectionStart === 'number' && typeof input.setSelectionRange === 'function') {
-    const start = Math.min(focusState.selectionStart, input.value.length);
-    const end = Math.min(focusState.selectionEnd ?? focusState.selectionStart, input.value.length);
-    input.setSelectionRange(start, end);
-  }
 }
 
 function round(value, digits = 1){
@@ -2102,78 +2002,14 @@ function ensureArray(value){
   return Array.isArray(value) ? value : [];
 }
 
-function stageStatusAlias(status){
-  const normalized = String(status || '').trim().toLowerCase();
-  return {
-    'запланировано': 'Запланирован',
-    'запланирован': 'Запланирован',
-    'в работе': 'В работе',
-    'просрочено': 'Просрочен',
-    'просрочен': 'Просрочен',
-    'пауза': 'Пауза',
-    'завершено': 'Завершен',
-    'завершен': 'Завершен'
-  }[normalized] || (status ? String(status).trim() : 'Запланирован');
-}
-
-function projectCodeNumber(projectId){
-  const match = String(projectId || '').match(/(\d{1,3})$/);
-  return match ? Number(match[1]) : 0;
-}
-
-function ensureProjectSequence(projects){
-  const cleaned = ensureArray(projects)
-    .filter((project) => project && project.id)
-    .map((project) => ({ ...project }));
-
-  const hasNumericCodes = cleaned.every((project) => /^П-\d{3}$/.test(String(project.id || '')));
-  if (!hasNumericCodes) {
-    return cleaned.map((project, index) => ({
-      ...project,
-      displayIndex: project.displayIndex || index + 1,
-      isPlaceholder: Boolean(project.isPlaceholder)
-    }));
+function parseMultiValue(value){
+  if (Array.isArray(value)) {
+    return unique(value.map((item) => String(item || '').trim()).filter(Boolean));
   }
-
-  const projectMap = new Map(cleaned.map((project) => [project.id, project]));
-  const numbers = cleaned.map((project) => projectCodeNumber(project.id)).filter(Boolean);
-  const maxNumber = numbers.length ? Math.max(...numbers) : cleaned.length;
-  const sequenced = [];
-
-  for (let number = 1; number <= maxNumber; number += 1) {
-    const id = `П-${String(number).padStart(3, '0')}`;
-    const project = projectMap.get(id);
-    if (project) {
-      sequenced.push({
-        ...project,
-        displayIndex: number,
-        isPlaceholder: Boolean(project.isPlaceholder)
-      });
-    } else {
-      sequenced.push({
-        id,
-        name: `Позиция ${number} — не заполнена в Excel`,
-        priority: 'Низкий',
-        status: 'Пауза',
-        displayIndex: number,
-        isPlaceholder: true
-      });
-    }
-  }
-
-  return sequenced;
-}
-
-function projectSortOrder(project){
-  return Number(project?.displayIndex || projectCodeNumber(project?.id) || Number.MAX_SAFE_INTEGER);
-}
-
-function projectDisplayLabel(project){
-  return `№ ${projectSortOrder(project)}`;
-}
-
-function projectOptionLabel(project){
-  return `${projectDisplayLabel(project)} • ${project.id} • ${project.name}`;
+  return unique(String(value || '')
+    .split(/[|,;]/)
+    .map((item) => item.trim())
+    .filter(Boolean));
 }
 
 
@@ -2213,14 +2049,14 @@ function normalizeData(raw){
   const data = raw && typeof raw === 'object' ? raw : deepClone(INITIAL_DATA);
   data.meta = data.meta || {};
   data.meta.title = data.meta.title || 'Планирование ресурсов инженерной команды';
-  data.meta.snapshotDate = data.meta.snapshotDate || '2026-04-10';
-  data.meta.presenceHorizonStart = data.meta.presenceHorizonStart || '2026-04-01';
+  data.meta.snapshotDate = data.meta.snapshotDate || '2026-04-09';
+  data.meta.presenceHorizonStart = data.meta.presenceHorizonStart || '2026-04-08';
   data.meta.unfixedRuleStart = data.meta.unfixedRuleStart || '2026-04-13';
   data.meta.presenceHorizonEnd = data.meta.presenceHorizonEnd || '2026-12-31';
   data.meta.version = APP_EXPORT_VERSION;
 
   data.projectStatuses = unique([...(data.projectStatuses || []), 'Активный', 'Сопровождение', 'Постобслуживание', 'Пауза', 'Завершен']);
-  data.stageStatuses = unique([...(data.stageStatuses || []).map(stageStatusAlias), 'Запланирован', 'В работе', 'Просрочен', 'Пауза', 'Завершен']);
+  data.stageStatuses = unique([...(data.stageStatuses || []), 'Запланировано', 'В работе', 'Просрочено', 'Завершено']);
   data.riskStatuses = unique([...(data.riskStatuses || []), 'Норма', 'Внимание', 'Риск', 'Просрочено']);
 
   const defaultPresenceStatuses = [
@@ -2248,7 +2084,9 @@ function normalizeData(raw){
       name: employee.name,
       role: employee.role || '',
       isKey: Boolean(employee.isKey),
-      normDayPct: num(employee.normDayPct, 100)
+      normDayPct: num(employee.normDayPct, 100),
+      substituteForEmployeeIds: parseMultiValue(employee.substituteForEmployeeIds || employee['Может подменить сотрудников'] || employee['Может подменить']),
+      substituteNote: employee.substituteNote || employee['Комментарий по подмене'] || ''
     }));
 
   const coordinatorExists = data.employees.some((employee) => employee.name === 'Максим Буржинский' && employee.role === 'Координатор отдела');
@@ -2257,16 +2095,25 @@ function normalizeData(raw){
     if (maxim) maxim.role = 'Координатор отдела';
   }
 
-  data.projects = ensureProjectSequence(ensureArray(data.projects)
+  const employeesByIdRaw = Object.fromEntries(data.employees.map((employee) => [employee.id, employee]));
+  const employeesByNameRaw = Object.fromEntries(data.employees.map((employee) => [employee.name, employee]));
+  data.employees = data.employees.map((employee) => ({
+    ...employee,
+    substituteForEmployeeIds: unique(ensureArray(employee.substituteForEmployeeIds)
+      .map((value) => employeesByIdRaw[value]?.id || employeesByNameRaw[value]?.id || '')
+      .filter(Boolean))
+      .filter((employeeId) => employeeId !== employee.id),
+    substituteNote: String(employee.substituteNote || '').trim()
+  }));
+
+  data.projects = ensureArray(data.projects)
     .filter((project) => project && project.id)
     .map((project) => ({
       id: project.id,
       name: project.name || project.id,
       priority: project.priority || 'Средний',
-      status: project.status || 'Активный',
-      displayIndex: project.displayIndex,
-      isPlaceholder: Boolean(project.isPlaceholder)
-    })));
+      status: project.status || 'Активный'
+    }));
 
   data.roles = ensureArray(data.roles)
     .filter((role) => role && role.name)
@@ -2350,7 +2197,7 @@ function normalizeData(raw){
         startDate: toISO(stage.startDate) || data.meta.snapshotDate,
         endDate: toISO(stage.endDate) || data.meta.snapshotDate,
         plannedLoadPct: num(stage.plannedLoadPct, template?.defaultLoadPct || 0),
-        status: stageStatusAlias(stage.status || 'Запланирован'),
+        status: stage.status || 'Запланировано',
         templateId: template?.id || stage.templateId || '',
         leadRole: stage.leadRole || template?.leadRole || '',
         supportRole: stage.supportRole || template?.supportRole || '',
@@ -2461,6 +2308,52 @@ function deriveData(data){
     const role = refs.rolesByName[roleName];
     return ensureArray(role?.replacementRoles).includes(targetRoleName);
   }
+
+  function getEmployeeRoleBasedTargetIds(employeeId){
+    const employee = refs.employeesById[employeeId];
+    const role = refs.rolesByName[employee?.role];
+    const replacementRoles = ensureArray(role?.replacementRoles);
+    if (!employee || !replacementRoles.length) return [];
+    return unique(data.employees
+      .filter((candidate) => candidate.id !== employeeId && replacementRoles.includes(candidate.role))
+      .map((candidate) => candidate.id));
+  }
+
+  function getEmployeeExplicitTargetIds(employeeId){
+    return unique(ensureArray(refs.employeesById[employeeId]?.substituteForEmployeeIds)
+      .filter((targetId) => targetId !== employeeId && refs.employeesById[targetId]));
+  }
+
+  function getEmployeeSubstituteTargetIds(employeeId){
+    return unique([
+      ...getEmployeeRoleBasedTargetIds(employeeId),
+      ...getEmployeeExplicitTargetIds(employeeId)
+    ]);
+  }
+
+  function getSubstitutionSourceLabel(substituteEmployeeId, targetEmployeeId){
+    const explicit = getEmployeeExplicitTargetIds(substituteEmployeeId).includes(targetEmployeeId);
+    const roleBased = getEmployeeRoleBasedTargetIds(substituteEmployeeId).includes(targetEmployeeId);
+    if (explicit && roleBased) return 'Явно и по роли';
+    if (explicit) return 'Явно';
+    if (roleBased) return 'По роли';
+    return '';
+  }
+
+  function canEmployeeSubstituteEmployee(substituteEmployeeId, targetEmployeeId){
+    if (!substituteEmployeeId || !targetEmployeeId || substituteEmployeeId === targetEmployeeId) return false;
+    return getEmployeeSubstituteTargetIds(substituteEmployeeId).includes(targetEmployeeId);
+  }
+
+  const employeeRoleBasedTargets = Object.fromEntries(data.employees.map((employee) => [employee.id, getEmployeeRoleBasedTargetIds(employee.id)]));
+  const employeeExplicitTargets = Object.fromEntries(data.employees.map((employee) => [employee.id, getEmployeeExplicitTargetIds(employee.id)]));
+  const employeeSubstituteTargets = Object.fromEntries(data.employees.map((employee) => [employee.id, getEmployeeSubstituteTargetIds(employee.id)]));
+  const employeeCoveredByIds = Object.fromEntries(data.employees.map((employee) => [
+    employee.id,
+    data.employees
+      .filter((candidate) => canEmployeeSubstituteEmployee(candidate.id, employee.id))
+      .map((candidate) => candidate.id)
+  ]));
 
   function getParticipationWeight(typeName){
     return num(refs.participationByName[typeName]?.weight, 1);
@@ -2584,6 +2477,42 @@ function deriveData(data){
     });
   });
 
+  function getOverlapWeeks(startDate, endDate){
+    const rangeStart = maxIso(startDate, horizonStart);
+    const rangeEnd = minIso(endDate, horizonEnd);
+    if (!rangeStart || !rangeEnd || rangeStart > rangeEnd) return [];
+    const startWeek = getWeekStartIso(rangeStart);
+    const endWeek = getWeekStartIso(rangeEnd);
+    return weeks.filter((weekStart) => weekStart >= startWeek && weekStart <= endWeek);
+  }
+
+  function canEmployeeCoverAdditionalLoad(employeeId, startDate, endDate, loadPct){
+    const overlapWeeks = getOverlapWeeks(startDate, endDate);
+    if (!overlapWeeks.length) return false;
+    return overlapWeeks.every((weekStart) => {
+      const availabilityPct = num(employeeWeeklyAvailability[employeeId]?.[weekStart], 100);
+      const weeklyLoadPct = num(employeeWeeklyLoad[employeeId]?.[weekStart], 0);
+      return availabilityPct > 0 && round(weeklyLoadPct + loadPct, 1) <= availabilityPct;
+    });
+  }
+
+  function getAssignmentReplacementCandidateIds(assignment, metric){
+    const targetRoleName = metric?.roleName || getAssignmentRoleName(assignment);
+    return data.employees
+      .filter((candidate) => {
+        if (candidate.id === assignment.employeeId) return false;
+        const explicit = canEmployeeSubstituteEmployee(candidate.id, assignment.employeeId);
+        const roleBased = fitsRoleForTarget(candidate.role, targetRoleName);
+        return explicit || roleBased;
+      })
+      .map((candidate) => candidate.id);
+  }
+
+  function getAssignmentAvailableReplacementIds(assignment, metric){
+    return getAssignmentReplacementCandidateIds(assignment, metric)
+      .filter((candidateId) => canEmployeeCoverAdditionalLoad(candidateId, assignment.startDate, assignment.endDate, metric?.finalLoadPct || 0));
+  }
+
   const employeeMetrics = {};
   data.employees.forEach((employee) => {
     const assignments = assignmentsByEmployee[employee.id] || [];
@@ -2616,20 +2545,35 @@ function deriveData(data){
       sickDays,
       currentAvailabilityPct,
       currentLoadPct,
-      availabilityLabel
+      availabilityLabel,
+      roleBasedTargetIds: employeeRoleBasedTargets[employee.id] || [],
+      explicitTargetIds: employeeExplicitTargets[employee.id] || [],
+      substituteTargetIds: employeeSubstituteTargets[employee.id] || [],
+      coveredByIds: employeeCoveredByIds[employee.id] || []
     };
   });
 
   Object.entries(assignmentMetrics).forEach(([assignmentId, metric]) => {
     const assignment = data.assignments.find((item) => item.id === assignmentId);
     const peakLoadPct = employeeMetrics[assignment.employeeId]?.peakLoadPct || 0;
+    const replacementCandidateIds = getAssignmentReplacementCandidateIds(assignment, metric);
+    const availableReplacementIds = getAssignmentAvailableReplacementIds(assignment, metric);
+    const replacementStatus = !replacementCandidateIds.length
+      ? 'Нет подмены'
+      : (availableReplacementIds.length ? 'Подмена доступна' : 'Подмена есть, но занята');
     let risk = 'Норма';
-    if (metric.absenceDays > 0 && peakLoadPct > 100) risk = 'Отсутствие и перегруз';
-    else if (metric.absenceDays > 0) risk = 'Отсутствие';
+    if (metric.absenceDays > 0 && peakLoadPct > 100 && !availableReplacementIds.length) risk = 'Отсутствие и перегруз без подмены';
+    else if (metric.absenceDays > 0 && !availableReplacementIds.length) risk = 'Отсутствие без подмены';
+    else if (metric.absenceDays > 0 && availableReplacementIds.length) risk = 'Отсутствие, есть подмена';
+    else if (peakLoadPct > 100 && !availableReplacementIds.length) risk = 'Перегруз без подмены';
     else if (peakLoadPct > 100) risk = 'Перегруз';
     else if (!metric.roleFit) risk = 'Не по роли';
     assignmentMetrics[assignmentId].peakEmployeeLoadPct = peakLoadPct;
     assignmentMetrics[assignmentId].risk = risk;
+    assignmentMetrics[assignmentId].replacementCandidateIds = replacementCandidateIds;
+    assignmentMetrics[assignmentId].availableReplacementIds = availableReplacementIds;
+    assignmentMetrics[assignmentId].replacementStatus = replacementStatus;
+    assignmentMetrics[assignmentId].replacementSourceLabels = Object.fromEntries(replacementCandidateIds.map((employeeId) => [employeeId, getSubstitutionSourceLabel(employeeId, assignment.employeeId)]));
   });
 
   const stageMetrics = {};
@@ -2650,25 +2594,55 @@ function deriveData(data){
     const reserveGap = stage.needsReserve && assignedPeopleCount < 2;
     const hasConflict = stageAssignments.some((assignment) => (assignmentMetrics[assignment.id]?.absenceDays || 0) > 0);
     const hasOverloadedAssignee = stageAssignments.some((assignment) => (employeeMetrics[assignment.employeeId]?.peakLoadPct || 0) > 100);
-    const overdue = ['Просрочен', 'Просрочено'].includes(stage.status) || (!['Завершен', 'Завершено'].includes(stage.status) && stage.endDate < referenceDate);
+    const overdue = stage.status === 'Просрочено' || (stage.status !== 'Завершено' && stage.endDate < referenceDate);
+    const leadCoverageCandidates = stage.leadRole
+      ? data.employees.filter((employee) => fitsRoleForTarget(employee.role, stage.leadRole)).map((employee) => employee.id)
+      : [];
+    const supportCoverageCandidates = stage.supportRole
+      ? data.employees.filter((employee) => fitsRoleForTarget(employee.role, stage.supportRole)).map((employee) => employee.id)
+      : [];
+    const availableReplacementIds = unique(stageAssignments.flatMap((assignment) => assignmentMetrics[assignment.id]?.availableReplacementIds || []));
+    const replacementGapAssignments = stageAssignments.filter((assignment) => {
+      const metric = assignmentMetrics[assignment.id];
+      const needsReplacement = onePerson || stage.needsReserve || (metric?.absenceDays || 0) > 0 || (employeeMetrics[assignment.employeeId]?.peakLoadPct || 0) > 100;
+      if (!needsReplacement) return false;
+      return !(metric?.availableReplacementIds || []).length;
+    });
+    const replacementGapEmployeeIds = unique(replacementGapAssignments.map((assignment) => assignment.employeeId));
+    const backupGap = replacementGapEmployeeIds.length > 0;
     const reasons = [];
     if (overdue) reasons.push('Срок этапа уже вышел');
     if (noPeople) reasons.push('Нет назначенных сотрудников');
     if (minPeopleShortage > 0) reasons.push(`Не хватает людей до минимального состава: ${minPeopleShortage}`);
-    if (missingLeadRole) reasons.push('Не закрыта ведущая роль');
-    if (missingSupportRole) reasons.push('Не закрыта поддерживающая роль');
+    if (missingLeadRole) {
+      reasons.push('Не закрыта ведущая роль');
+      if (leadCoverageCandidates.length) {
+        reasons.push(`Кого можно поставить на ведущую роль: ${leadCoverageCandidates.map((employeeId) => refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')}`);
+      }
+    }
+    if (missingSupportRole) {
+      reasons.push('Не закрыта поддерживающая роль');
+      if (supportCoverageCandidates.length) {
+        reasons.push(`Кого можно поставить на поддерживающую роль: ${supportCoverageCandidates.map((employeeId) => refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')}`);
+      }
+    }
     if (hasOverloadedAssignee) reasons.push('Назначенный сотрудник перегружен');
     if (hasConflict) reasons.push('Есть отпуск / больничный в период этапа');
     if (onePerson) reasons.push('Этап держится на одном сотруднике');
     if (reserveGap) reasons.push('Нужен резерв');
+    if (backupGap) {
+      reasons.push(`Нет доступной подмены для: ${replacementGapEmployeeIds.map((employeeId) => refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')}`);
+    } else if (availableReplacementIds.length) {
+      reasons.push(`Доступная подмена: ${availableReplacementIds.map((employeeId) => refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')}`);
+    }
     if (uncoveredLoadPct > 0) reasons.push(`Незакрытая плановая загрузка: ${formatPct(uncoveredLoadPct)}`);
     const roleCoverageLabel = (!leadCovered || !supportCovered)
       ? 'Ролевой дефицит'
-      : (reserveGap ? 'Нужен резерв' : 'Закрыто');
+      : (backupGap ? 'Нет подмены' : reserveGap ? 'Нужен резерв' : 'Закрыто');
 
     let riskLevel = 'Норма';
     if (overdue) riskLevel = 'Просрочено';
-    else if (noPeople || minPeopleShortage > 0 || missingLeadRole || missingSupportRole || hasOverloadedAssignee || hasConflict) riskLevel = 'Риск';
+    else if (noPeople || minPeopleShortage > 0 || missingLeadRole || missingSupportRole || hasOverloadedAssignee || hasConflict || backupGap) riskLevel = 'Риск';
     else if (onePerson || reserveGap || uncoveredLoadPct > 0) riskLevel = 'Внимание';
 
     stageMetrics[stage.id] = {
@@ -2691,7 +2665,13 @@ function deriveData(data){
       reserveGap,
       roleCoverageLabel,
       reasons,
-      riskLevel
+      riskLevel,
+      leadCoverageCandidates,
+      supportCoverageCandidates,
+      availableReplacementIds,
+      replacementGapAssignments,
+      replacementGapEmployeeIds,
+      backupGap
     };
   });
 
@@ -2707,13 +2687,14 @@ function deriveData(data){
     const roleGapStages = projectStages.filter((stage) => stageMetrics[stage.id]?.missingLeadRole || stageMetrics[stage.id]?.missingSupportRole);
     const conflictStages = projectStages.filter((stage) => stageMetrics[stage.id]?.hasConflict);
     const singleOwnerStages = projectStages.filter((stage) => stageMetrics[stage.id]?.onePerson);
+    const substitutionGapStages = projectStages.filter((stage) => stageMetrics[stage.id]?.backupGap);
     const overloadedEmployeeIds = participantIds.filter((employeeId) =>
       weeks.some((weekStart) => num(projectEmployeeWeeklyLoad[project.id]?.[employeeId]?.[weekStart], 0) > 100)
     );
     const minStart = projectStages[0]?.startDate || horizonStart;
     const maxEnd = projectStages[projectStages.length - 1]?.endDate || horizonEnd;
     const projectWeeks = weeks.filter((weekStart) => weekStart >= getWeekStartIso(minStart) && weekStart <= getWeekStartIso(maxEnd));
-    const riskScore = overdueStages.length * 4 + riskyStages.filter((stage) => stageMetrics[stage.id]?.riskLevel === 'Риск').length * 2 + attentionStages.length + shortageStages.length + roleGapStages.length;
+    const riskScore = overdueStages.length * 4 + riskyStages.filter((stage) => stageMetrics[stage.id]?.riskLevel === 'Риск').length * 2 + attentionStages.length + shortageStages.length + roleGapStages.length + substitutionGapStages.length;
 
     projectMetrics[project.id] = {
       project,
@@ -2729,6 +2710,7 @@ function deriveData(data){
       roleGapStages,
       conflictStages,
       singleOwnerStages,
+      substitutionGapStages,
       overloadedEmployeeIds,
       overloadedEmployeesCount: overloadedEmployeeIds.length,
       riskScore,
@@ -2736,7 +2718,7 @@ function deriveData(data){
       minStart,
       maxEnd,
       summary: projectStages.length
-        ? `${projectStages.length} этапов • ${riskyStages.length} рискованных • ${overloadedEmployeeIds.length} перегруженных сотрудников`
+        ? `${projectStages.length} этапов • ${riskyStages.length} рискованных • ${overloadedEmployeeIds.length} перегруженных сотрудников • ${substitutionGapStages.length} без подмены`
         : 'Этапов пока нет'
     };
   });
@@ -2832,6 +2814,11 @@ function deriveData(data){
     getAssignmentRoleName,
     fitsRoleForTarget,
     getParticipationWeight,
+    canEmployeeSubstituteEmployee,
+    employeeRoleBasedTargets,
+    employeeExplicitTargets,
+    employeeSubstituteTargets,
+    employeeCoveredByIds,
     stageWeeklyPlanned,
     assignmentWeeklyLoad,
     assignmentMetrics,
@@ -2885,7 +2872,6 @@ function openModal({ title, subtitle = '', content = '', wide = false, onOpen = 
     </div>
   `;
   if (typeof onOpen === 'function') onOpen(DOM.modalRoot.querySelector('.modal'));
-  scheduleEnhanceScrollAreas();
 }
 
 function closeModal(){
@@ -2922,13 +2908,9 @@ function toneForProjectStatus(status){
 
 function toneForStageStatus(status){
   return {
-    'Запланирован': 'neutral',
     'Запланировано': 'neutral',
     'В работе': 'blue',
-    'Просрочен': 'red',
     'Просрочено': 'red',
-    'Пауза': 'yellow',
-    'Завершен': 'green',
     'Завершено': 'green'
   }[status] || 'neutral';
 }
@@ -3016,176 +2998,6 @@ function navigate(view, options = {}){
   }
 }
 
-
-const SCROLLABLE_SELECTORS = '.table-wrap,.heatmap-wrap,.gantt-shell';
-let scrollEnhanceHandle = 0;
-
-function scheduleEnhanceScrollAreas(){
-  if (scrollEnhanceHandle) cancelAnimationFrame(scrollEnhanceHandle);
-  scrollEnhanceHandle = requestAnimationFrame(() => {
-    enhanceScrollAreas(document.body);
-    scrollEnhanceHandle = 0;
-  });
-}
-
-function enhanceScrollAreas(root = document.body){
-  if (!root) return;
-  const elements = Array.from(root.querySelectorAll(SCROLLABLE_SELECTORS));
-  elements.forEach((element) => {
-    if (!(element instanceof HTMLElement) || !element.parentElement) return;
-
-    let shell = element.parentElement;
-    let topScroller = null;
-    let toolbar = null;
-
-    if (!shell.classList.contains('scroll-sync-shell')) {
-      shell = document.createElement('div');
-      shell.className = 'scroll-sync-shell';
-
-      toolbar = document.createElement('div');
-      toolbar.className = 'scroll-sync-toolbar';
-      toolbar.innerHTML = `
-        <span class="scroll-sync-hint">Прокрутка</span>
-        <button type="button" class="btn btn-small btn-ghost scroll-shift-btn" data-scroll-dir="-1" aria-label="Прокрутить влево">←</button>
-        <div class="scroll-sync-top" title="Горизонтальная прокрутка" aria-hidden="true"><div class="scroll-sync-top__inner"></div></div>
-        <button type="button" class="btn btn-small btn-ghost scroll-shift-btn" data-scroll-dir="1" aria-label="Прокрутить вправо">→</button>
-      `;
-      topScroller = toolbar.querySelector('.scroll-sync-top');
-
-      element.parentNode.insertBefore(shell, element);
-      shell.appendChild(toolbar);
-      shell.appendChild(element);
-      element.classList.add('scroll-sync-main');
-      bindScrollSync(element, topScroller, shell);
-    } else {
-      toolbar = shell.querySelector('.scroll-sync-toolbar');
-      topScroller = shell.querySelector('.scroll-sync-top');
-      if (!toolbar) {
-        toolbar = document.createElement('div');
-        toolbar.className = 'scroll-sync-toolbar';
-        toolbar.innerHTML = `
-          <span class="scroll-sync-hint">Прокрутка</span>
-          <button type="button" class="btn btn-small btn-ghost scroll-shift-btn" data-scroll-dir="-1" aria-label="Прокрутить влево">←</button>
-          <div class="scroll-sync-top" title="Горизонтальная прокрутка" aria-hidden="true"><div class="scroll-sync-top__inner"></div></div>
-          <button type="button" class="btn btn-small btn-ghost scroll-shift-btn" data-scroll-dir="1" aria-label="Прокрутить вправо">→</button>
-        `;
-        shell.insertBefore(toolbar, shell.firstChild);
-        topScroller = toolbar.querySelector('.scroll-sync-top');
-        element.dataset.scrollSyncBound = '';
-      }
-      element.classList.add('scroll-sync-main');
-      if (topScroller && element.dataset.scrollSyncBound !== '1') {
-        bindScrollSync(element, topScroller, shell);
-      }
-    }
-
-    updateScrollEnhancer(element);
-  });
-}
-
-function bindScrollSync(mainScroller, topScroller, shell){
-  if (!mainScroller || !topScroller || mainScroller.dataset.scrollSyncBound === '1') return;
-  mainScroller.dataset.scrollSyncBound = '1';
-
-  let isSyncing = false;
-
-  const syncState = () => updateScrollEnhancer(mainScroller);
-  const toolbar = shell.querySelector('.scroll-sync-toolbar');
-  const leftButton = toolbar?.querySelector('[data-scroll-dir="-1"]');
-  const rightButton = toolbar?.querySelector('[data-scroll-dir="1"]');
-
-  const scrollByStep = (direction) => {
-    const step = Math.max(180, Math.round(mainScroller.clientWidth * 0.72));
-    mainScroller.scrollBy({ left: direction * step, behavior: 'smooth' });
-    requestAnimationFrame(syncState);
-  };
-
-  const syncFromMain = () => {
-    if (isSyncing) return;
-    isSyncing = true;
-    topScroller.scrollLeft = mainScroller.scrollLeft;
-    syncState();
-    requestAnimationFrame(() => { isSyncing = false; });
-  };
-
-  const syncFromTop = () => {
-    if (isSyncing) return;
-    isSyncing = true;
-    mainScroller.scrollLeft = topScroller.scrollLeft;
-    syncState();
-    requestAnimationFrame(() => { isSyncing = false; });
-  };
-
-  const wheelToHorizontal = (event) => {
-    const canScroll = mainScroller.scrollWidth > mainScroller.clientWidth + 2;
-    if (!canScroll || event.ctrlKey) return;
-
-    const dominantVertical = Math.abs(event.deltaY) > Math.abs(event.deltaX);
-    const shouldUseWheel = event.currentTarget === topScroller ? dominantVertical : (event.shiftKey && event.deltaY !== 0);
-    if (!shouldUseWheel) return;
-
-    mainScroller.scrollLeft += event.deltaY || event.deltaX;
-    topScroller.scrollLeft = mainScroller.scrollLeft;
-    syncState();
-    event.preventDefault();
-  };
-
-  mainScroller.addEventListener('scroll', syncFromMain, { passive: true });
-  topScroller.addEventListener('scroll', syncFromTop, { passive: true });
-  topScroller.addEventListener('wheel', wheelToHorizontal, { passive: false });
-  mainScroller.addEventListener('wheel', wheelToHorizontal, { passive: false });
-  leftButton?.addEventListener('click', () => scrollByStep(-1));
-  rightButton?.addEventListener('click', () => scrollByStep(1));
-
-  if (window.ResizeObserver) {
-    const observer = new ResizeObserver(() => updateScrollEnhancer(mainScroller));
-    observer.observe(mainScroller);
-    Array.from(mainScroller.children || []).forEach((child) => observer.observe(child));
-  }
-}
-
-function updateScrollEnhancer(mainScroller){
-  if (!(mainScroller instanceof HTMLElement)) return;
-  const shell = mainScroller.parentElement?.classList.contains('scroll-sync-shell') ? mainScroller.parentElement : null;
-  if (!shell) return;
-  const toolbar = shell.querySelector('.scroll-sync-toolbar');
-  const topScroller = shell.querySelector('.scroll-sync-top');
-  const inner = topScroller?.firstElementChild;
-  const leftButton = shell.querySelector('[data-scroll-dir="-1"]');
-  const rightButton = shell.querySelector('[data-scroll-dir="1"]');
-  if (!(topScroller instanceof HTMLElement) || !(inner instanceof HTMLElement)) return;
-
-  const hasOverflow = mainScroller.scrollWidth > mainScroller.clientWidth + 2;
-  shell.classList.toggle('has-horizontal-scroll', hasOverflow);
-  if (toolbar instanceof HTMLElement) {
-    toolbar.hidden = !hasOverflow;
-  }
-  shell.style.setProperty('--scroll-shadow-top', `${hasOverflow ? ((toolbar instanceof HTMLElement ? toolbar.offsetHeight : topScroller.offsetHeight) + 8) : 0}px`);
-
-  if (!hasOverflow) {
-    mainScroller.scrollLeft = 0;
-    topScroller.scrollLeft = 0;
-    shell.classList.remove('can-scroll-left', 'can-scroll-right');
-    inner.style.width = '0px';
-    if (leftButton instanceof HTMLButtonElement) leftButton.disabled = true;
-    if (rightButton instanceof HTMLButtonElement) rightButton.disabled = true;
-    return;
-  }
-
-  inner.style.width = `${mainScroller.scrollWidth}px`;
-  if (Math.abs(topScroller.scrollLeft - mainScroller.scrollLeft) > 1) {
-    topScroller.scrollLeft = mainScroller.scrollLeft;
-  }
-
-  const maxScrollLeft = Math.max(0, mainScroller.scrollWidth - mainScroller.clientWidth);
-  const canScrollLeft = mainScroller.scrollLeft > 2;
-  const canScrollRight = mainScroller.scrollLeft < maxScrollLeft - 2;
-  shell.classList.toggle('can-scroll-left', canScrollLeft);
-  shell.classList.toggle('can-scroll-right', canScrollRight);
-  if (leftButton instanceof HTMLButtonElement) leftButton.disabled = !canScrollLeft;
-  if (rightButton instanceof HTMLButtonElement) rightButton.disabled = !canScrollRight;
-}
-
 function renderBreadcrumbs(items){
   return items.map((item, index) => {
     const clickable = item.view ? `<button data-action="navigate" data-view="${esc(item.view)}" ${item.projectId ? `data-project-id="${esc(item.projectId)}"` : ''} ${item.projectTab ? `data-project-tab="${esc(item.projectTab)}"` : ''}>${esc(item.label)}</button>` : `<span>${esc(item.label)}</span>`;
@@ -3194,10 +3006,6 @@ function renderBreadcrumbs(items){
 }
 
 function renderApp(){
-  if (uiRenderTimer) {
-    clearTimeout(uiRenderTimer);
-    uiRenderTimer = null;
-  }
   destroyCharts();
   derived = deriveData(appData);
   if (!ui.projectId || !appData.projects.some((project) => project.id === ui.projectId)) {
@@ -3271,7 +3079,6 @@ function renderApp(){
   DOM.breadcrumbs.innerHTML = renderBreadcrumbs(breadcrumbs);
   DOM.content.innerHTML = viewHtml;
   renderDeferredCharts();
-  scheduleEnhanceScrollAreas();
 }
 
 
@@ -3280,14 +3087,16 @@ function renderProjectsView(){
     .map((project) => ({ project, metrics: derived.projectMetrics[project.id] }))
     .filter(({ project }) => {
       const query = ui.projectsSearch.trim().toLowerCase();
-      const matchesSearch = !query || `${projectDisplayLabel(project)} ${project.id} ${project.name}`.toLowerCase().includes(query);
+      const matchesSearch = !query || `${project.id} ${project.name}`.toLowerCase().includes(query);
       const matchesStatus = ui.projectsStatus === 'Все' || project.status === ui.projectsStatus;
       const matchesPriority = ui.projectsPriority === 'Все' || project.priority === ui.projectsPriority;
       return matchesSearch && matchesStatus && matchesPriority;
     })
     .sort((left, right) => {
-      const orderCompare = projectSortOrder(left.project) - projectSortOrder(right.project);
-      if (orderCompare !== 0) return orderCompare;
+      const riskCompare = right.metrics.riskScore - left.metrics.riskScore;
+      if (riskCompare !== 0) return riskCompare;
+      const priorityCompare = priorityWeight(right.project.priority) - priorityWeight(left.project.priority);
+      if (priorityCompare !== 0) return priorityCompare;
       return left.project.name.localeCompare(right.project.name, 'ru');
     });
 
@@ -3296,15 +3105,13 @@ function renderProjectsView(){
   const overdueStages = allProjectMetrics.reduce((sum, metrics) => sum + metrics.overdueCount, 0);
   const overloadedEmployees = unique(allProjectMetrics.flatMap((metrics) => metrics.overloadedEmployeeIds)).length;
   const activeProjects = appData.projects.filter((project) => project.status === 'Активный').length;
-  const placeholderProjects = appData.projects.filter((project) => project.isPlaceholder);
-
   const filters = `
     <section class="hero-card card">
       <div class="hero-top">
         <div class="hero-title">
           <div class="overline">Первый экран</div>
           <h2 class="hero-heading">Портфель проектов</h2>
-          <div class="section-subtitle">Порядок работы сделан линейным: сначала выберите проект, затем проверьте этапы, после этого назначьте людей и только потом смотрите гант и недельную загрузку.</div>
+          <div class="section-subtitle">Карточки строятся на данных из Excel: проект, этапы, приоритет, статус, риск, перегруз и краткая сводка по команде.</div>
         </div>
         <div class="hero-meta">
           ${badge(`Снимок данных: ${formatDate(appData.meta.snapshotDate)}`, 'outline')}
@@ -3314,7 +3121,7 @@ function renderProjectsView(){
       <div class="filters-row">
         <div class="field field--grow">
           <label for="projectsSearch">Поиск по проекту</label>
-          <input id="projectsSearch" class="input" data-ui-key="projectsSearch" value="${esc(ui.projectsSearch)}" placeholder="№, код или название проекта" />
+          <input id="projectsSearch" class="input" data-ui-key="projectsSearch" value="${esc(ui.projectsSearch)}" placeholder="Название или код проекта" />
         </div>
         <div class="field">
           <label for="projectsStatus">Статус проекта</label>
@@ -3330,16 +3137,6 @@ function renderProjectsView(){
         </div>
       </div>
     </section>
-    <section class="callout callout--blue">
-      <div class="callout__title">Как пользоваться проще всего</div>
-      <div>1) откройте нужный проект; 2) на вкладке «Этапы проекта» проверьте сроки и состав; 3) на вкладке «Назначения на этапы» добавьте людей; 4) на вкладках «Гант проекта» и «Загрузка сотрудников по проекту» сразу видно, где есть риск.</div>
-    </section>
-    ${placeholderProjects.length ? `
-      <section class="callout callout--yellow">
-        <div class="callout__title">Нумерация проектов 1–16 сохранена</div>
-        <div>В исходном Excel диапазон кодов идёт до 16, но позиция 11 не заполнена. Она оставлена в интерфейсе как пустая карточка, чтобы порядок проектов не сбивался и свободное место было видно сразу.</div>
-      </section>
-    ` : ''}
   `;
 
   const kpis = `
@@ -3349,7 +3146,7 @@ function renderProjectsView(){
       ${renderKpiCard('Просроченные этапы', String(overdueStages), 'Суммарно по всем проектам', 'yellow')}
       ${renderKpiCard('Перегруженные сотрудники', String(overloadedEmployees), 'Хотя бы в одном проекте выше 100% по неделям', 'red')}
       ${renderKpiCard('Этапы без резерва', String(appData.stages.filter((stage) => derived.stageMetrics[stage.id]?.reserveGap).length), 'Нужен резерв, но исполнителей меньше двух', 'yellow')}
-      ${renderKpiCard('Пустые проекты', String(appData.projects.filter((project) => derived.projectMetrics[project.id].stageCount === 0).length), 'Удобно видеть свободные и незаполненные позиции', 'green')}
+      ${renderKpiCard('Пустые проекты', String(appData.projects.filter((project) => derived.projectMetrics[project.id].stageCount === 0).length), 'Пока без этапов в структуре', 'green')}
     </section>
   `;
 
@@ -3362,14 +3159,11 @@ function renderProjectsView(){
             : metrics.attentionCount > 0 ? 'Внимание'
             : 'Норма';
           const participantNames = metrics.participantIds.slice(0, 4).map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
-          const summary = project.isPlaceholder
-            ? 'Свободная позиция в портфеле. Нужна для того, чтобы нумерация 1–16 совпадала с проектным диапазоном из Excel.'
-            : metrics.summary;
           return `
             <article class="project-card">
               <div class="project-card__header">
                 <div>
-                  <div class="project-card__subtitle">${esc(projectDisplayLabel(project))} • ${esc(project.id)}</div>
+                  <div class="project-card__subtitle">${esc(project.id)}</div>
                   <div class="project-card__title">${esc(project.name)}</div>
                 </div>
                 <div class="badges">
@@ -3396,12 +3190,12 @@ function renderProjectsView(){
                   <div class="metric-inline__value">${metrics.overloadedEmployeesCount}</div>
                 </div>
               </div>
-              <div class="muted">${esc(summary)}</div>
+              <div class="muted">${esc(metrics.summary)}</div>
               <div class="chip-row">
-                ${participantNames.length ? participantNames.map((name) => chip(name, 'outline')).join('') : chip(project.isPlaceholder ? 'Пока без данных' : 'Сотрудники пока не назначены', 'neutral')}
+                ${participantNames.length ? participantNames.map((name) => chip(name, 'outline')).join('') : chip('Сотрудники пока не назначены', 'neutral')}
               </div>
               <div class="flex-between">
-                <div class="mini-note">Коротко: нехватка людей — ${metrics.shortageStages.length}, ролевые дефициты — ${metrics.roleGapStages.length}, этапы на одном человеке — ${metrics.singleOwnerStages.length}.</div>
+                <div class="mini-note">Короткая сводка: нехватка людей — ${metrics.shortageStages.length}, ролевые дефициты — ${metrics.roleGapStages.length}, этапы на одном человеке — ${metrics.singleOwnerStages.length}.</div>
                 <button class="btn btn-primary" data-action="open-project" data-project-id="${esc(project.id)}">Открыть проект</button>
               </div>
             </article>
@@ -3458,11 +3252,9 @@ function renderProjectView(projectId){
       <section class="hero-card card">
         <div class="hero-top">
           <div class="hero-title">
-            <div class="overline">${esc(projectDisplayLabel(project))} • ${esc(project.id)}</div>
+            <div class="overline">${esc(project.id)}</div>
             <h2 class="hero-heading">${esc(project.name)}</h2>
-            <div class="section-subtitle">${project.isPlaceholder
-              ? 'Это свободная позиция из Excel. Если сюда вернётся реальный проект, этапы можно сразу завести здесь.'
-              : 'Рабочий порядок внутри проекта максимально прямой: этапы → люди → гант → недельная загрузка → итоговая сводка.'}</div>
+            <div class="section-subtitle">Карточка проекта сохраняет этапы, роли, статусы, присутствие, расчёты загрузки и риск-логику из Excel в более прозрачном веб-интерфейсе.</div>
           </div>
           <div class="hero-meta">
             ${badge(project.status, toneForProjectStatus(project.status))}
@@ -3476,24 +3268,9 @@ function renderProjectView(projectId){
           ${renderKpiCard('Риск / внимание', `${metrics.riskyCount} / ${metrics.attentionCount}`, 'Рискованные и предупреждающие этапы', 'yellow')}
           ${renderKpiCard('Участников', String(metrics.participantCount), 'Уникальные сотрудники проекта', 'green')}
           ${renderKpiCard('Нехватка людей', String(metrics.shortageStages.length), 'Этапы, где меньше минимального состава', 'yellow')}
+          ${renderKpiCard('Нет подмены', String(metrics.substitutionGapStages.length), 'Этапы, где некому подстраховать назначенного человека', metrics.substitutionGapStages.length ? 'red' : 'green')}
           ${renderKpiCard('Перегружены', String(metrics.overloadedEmployeesCount), 'Сотрудники проекта с неделями выше 100%', 'red')}
         </div>
-        <div class="callout callout--blue">
-          <div class="callout__title">Быстрые действия без лишних переходов</div>
-          <div class="btn-group" style="margin-top:10px;">
-            <button class="btn btn-primary" data-action="add-stage" data-project-id="${esc(project.id)}">Добавить этап и сразу назначить людей</button>
-            <button class="btn" data-action="bulk-assign" ${metrics.stageCount ? '' : 'disabled'}>Назначить людей</button>
-            <button class="btn" data-action="project-tab" data-project-tab="gantt">Открыть гант</button>
-            <button class="btn" data-action="project-tab" data-project-tab="load">Проверить загрузку</button>
-          </div>
-          <div class="mini-note" style="margin-top:10px;">Сначала заполняйте этапы. Когда структура готова, массовое назначение сотрудников работает быстрее и чище, чем редактирование строк по одной.</div>
-        </div>
-        ${project.isPlaceholder ? `
-          <div class="callout callout--yellow">
-            <div class="callout__title">Пустая позиция в диапазоне 1–16</div>
-            <div>Эта карточка оставлена намеренно, потому что в исходном Excel кодовой диапазон проектов идёт до 16. Позиция 11 сейчас свободна.</div>
-          </div>
-        ` : ''}
         <div class="tabs">
           ${tabs.map(([id, label]) => `<button class="tab-btn ${ui.projectTab === id ? 'is-active' : ''}" data-action="project-tab" data-project-tab="${id}">${esc(label)}</button>`).join('')}
         </div>
@@ -3503,12 +3280,13 @@ function renderProjectView(projectId){
   `;
 }
 
+
 function renderProjectStagesTab(project, metrics){
   const stages = metrics.projectStages
     .filter((stage) => {
       const query = ui.projectStageSearch.trim().toLowerCase();
       const stageMetric = derived.stageMetrics[stage.id];
-      const matchesSearch = textMatchesSearch(`${stage.id} ${stage.name} ${stage.leadRole} ${stage.supportRole}`, query);
+      const matchesSearch = !query || `${stage.id} ${stage.name} ${stage.leadRole} ${stage.supportRole}`.toLowerCase().includes(query);
       const matchesStatus = ui.projectStageStatus === 'Все' || stage.status === ui.projectStageStatus;
       const matchesRisk = ui.projectStageRisk === 'Все' || stageMetric.riskLevel === ui.projectStageRisk;
       return matchesSearch && matchesStatus && matchesRisk;
@@ -3536,7 +3314,7 @@ function renderProjectStagesTab(project, metrics){
           </div>
         </div>
         <div class="toolbar__group">
-          <button class="btn btn-primary" data-action="add-stage" data-project-id="${esc(project.id)}">Добавить этап и сразу назначить людей</button>
+          <button class="btn btn-primary" data-action="add-stage" data-project-id="${esc(project.id)}">Добавить этап</button>
         </div>
       </div>
     </section>
@@ -3560,6 +3338,7 @@ function renderProjectStagesTab(project, metrics){
             <th>Люди</th>
             <th>Роли</th>
             <th>Резерв</th>
+            <th>Подмена</th>
             <th>Риск</th>
             <th>Причины</th>
             <th>Действия</th>
@@ -3602,6 +3381,22 @@ function renderProjectStagesTab(project, metrics){
                 </td>
                 <td>
                   ${stage.needsReserve ? badge(stageMetric.reserveGap ? 'Нужен резерв' : 'Резерв закрыт', stageMetric.reserveGap ? 'yellow' : 'green') : badge('Не требуется', 'neutral')}
+                </td>
+                <td>
+                  ${stageMetric.assignedPeopleCount === 0
+                    ? badge('Сначала назначьте людей', 'neutral')
+                    : stageMetric.backupGap
+                      ? badge('Нет подмены', 'red')
+                      : stageMetric.availableReplacementIds.length
+                        ? badge('Есть подмена', 'green')
+                        : badge('Не критично', 'neutral')}
+                  <div class="mini-note" style="margin-top:8px;">
+                    ${stageMetric.availableReplacementIds.length
+                      ? stageMetric.availableReplacementIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')
+                      : stageMetric.backupGap
+                        ? stageMetric.replacementGapEmployeeIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean).join(', ')
+                        : 'Подмена сейчас не требуется'}
+                  </div>
                 </td>
                 <td>${badge(stageMetric.riskLevel, toneForRisk(stageMetric.riskLevel))}</td>
                 <td>
@@ -3711,6 +3506,7 @@ function renderProjectAssignmentsTab(project, metrics){
               <th>Итоговая</th>
               <th>Участие</th>
               <th>Отсутствия</th>
+              <th>Подмена</th>
               <th>Риск</th>
               <th>Комментарий</th>
               <th>Действия</th>
@@ -3737,7 +3533,21 @@ function renderProjectAssignmentsTab(project, metrics){
                     <div class="mini-note">до ${formatDate(assignment.endDate)}</div>
                   </td>
                   <td>${metric.absenceDays ? `${metric.absenceDays} дн.` : 'Нет'}</td>
-                  <td>${badge(metric.risk, metric.risk === 'Норма' ? 'green' : metric.risk.includes('Перегруз') ? 'red' : metric.risk.includes('Отсутствие') ? 'yellow' : 'violet')}</td>
+                  <td>
+                    ${badge(metric.replacementStatus, metric.replacementStatus === 'Подмена доступна' ? 'green' : metric.replacementStatus === 'Нет подмены' ? 'red' : 'yellow')}
+                    <div class="mini-note" style="margin-top:8px;">
+                      ${metric.availableReplacementIds.length
+                        ? metric.availableReplacementIds.map((employeeId) => {
+                            const employeeName = derived.refs.employeesById[employeeId]?.name || employeeId;
+                            const sourceLabel = metric.replacementSourceLabels?.[employeeId];
+                            return sourceLabel ? `${employeeName} (${sourceLabel})` : employeeName;
+                          }).join(', ')
+                        : metric.replacementCandidateIds.length
+                          ? metric.replacementCandidateIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name || employeeId).join(', ')
+                          : 'Не указана'}
+                    </div>
+                  </td>
+                  <td>${badge(metric.risk, metric.risk === 'Норма' ? 'green' : metric.risk.includes('без подмены') || metric.risk.includes('Перегруз') ? 'red' : metric.risk.includes('Отсутствие') ? 'yellow' : 'violet')}</td>
                   <td>${safeText(assignment.comment || '—')}</td>
                   <td>
                     <div class="actions">
@@ -4062,12 +3872,13 @@ function renderProjectSummaryTab(project, metrics){
       ${renderKpiCard('Рискованных', String(metrics.riskyCount), 'Этапы уровня «Риск» и «Просрочено»', metrics.riskyCount ? 'red' : 'green')}
       ${renderKpiCard('Нехватка людей', String(metrics.shortageStages.length), 'Этапы ниже минимального состава', metrics.shortageStages.length ? 'yellow' : 'green')}
       ${renderKpiCard('Нехватка ролей', String(metrics.roleGapStages.length), 'Не закрыта ведущая или поддерживающая роль', metrics.roleGapStages.length ? 'yellow' : 'green')}
+      ${renderKpiCard('Нет подмены', String(metrics.substitutionGapStages.length), 'Этапы, где нет доступной подмены на критичное назначение', metrics.substitutionGapStages.length ? 'red' : 'green')}
       ${renderKpiCard('Конфликт отпуск / этап', String(metrics.conflictStages.length), 'Есть назначение на сотрудника с отсутствием', metrics.conflictStages.length ? 'red' : 'green')}
     </section>
     <section class="split">
       <div class="panel">
         <h3 class="section-title">Ключевые проблемы проекта</h3>
-        <p class="section-subtitle">Список строится из фактических признаков риска: просрочка, дефицит людей, отсутствие нужной роли, перегруз и конфликт по присутствию.</p>
+        <p class="section-subtitle">Список строится из фактических признаков риска: просрочка, дефицит людей, отсутствие нужной роли, перегруз, конфликт по присутствию и отсутствие подмены.</p>
         <div class="list" style="margin-top:16px;">
           ${topIssues.length ? topIssues.map(({ stage, stageMetric }) => `
             <div class="list-item">
@@ -4105,6 +3916,12 @@ function renderProjectSummaryTab(project, metrics){
             <div>
               <div class="list-item__title">Этапы с ролевым дефицитом</div>
               <div class="list-item__meta">${metrics.roleGapStages.length ? metrics.roleGapStages.map((stage) => stage.name).join(', ') : 'Нет'}</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div>
+              <div class="list-item__title">Этапы без подмены</div>
+              <div class="list-item__meta">${metrics.substitutionGapStages.length ? metrics.substitutionGapStages.map((stage) => stage.name).join(', ') : 'Нет'}</div>
             </div>
           </div>
           <div class="list-item">
@@ -4277,7 +4094,7 @@ function renderTeamView(){
   const employees = appData.employees
     .filter((employee) => {
       const query = ui.teamSearch.trim().toLowerCase();
-      const matchesSearch = textMatchesSearch(`${employee.name} ${employee.role}`, query);
+      const matchesSearch = !query || `${employee.name} ${employee.role}`.toLowerCase().includes(query);
       const matchesRole = ui.teamRole === 'Все' || employee.role === ui.teamRole;
       return matchesSearch && matchesRole;
     })
@@ -4312,7 +4129,7 @@ function renderTeamView(){
       ${renderKpiCard('Перегружены сейчас', String(currentWeek.overloadedEmployeesCount), 'Недельная загрузка выше 100%', currentWeek.overloadedEmployeesCount ? 'red' : 'green')}
       ${renderKpiCard('Сегодня в отпуске', String(todayVacationCount), formatDate(currentDay), todayVacationCount ? 'yellow' : 'green')}
       ${renderKpiCard('Сегодня на больничном', String(todaySickCount), formatDate(currentDay), todaySickCount ? 'red' : 'green')}
-      ${renderKpiCard('Пиковая нагрузка', formatPct(Math.max(...appData.employees.map((employee) => derived.employeeMetrics[employee.id]?.peakLoadPct || 0))), 'Максимум по команде', 'red')}
+      ${renderKpiCard('Подмена настроена', String(appData.employees.filter((employee) => (employee.substituteForEmployeeIds || []).length > 0).length), 'Сотрудники, у кого явно указан список подмены', 'blue')}
     </section>
     <section class="cards-grid cards-grid--4">
       ${employees.map((employee) => {
@@ -4320,6 +4137,8 @@ function renderTeamView(){
         const projects = metrics.projectIds.map((projectId) => derived.refs.projectsById[projectId]?.name).filter(Boolean);
         const currentStatus = derived.getPresenceStatus(employee.id, currentDay);
         const currentLoadTone = toneForLoadPct(metrics.currentLoadPct);
+        const substituteTargetNames = metrics.substituteTargetIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
+        const coveredByNames = metrics.coveredByIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
         return `
           <article class="employee-card">
             <div class="employee-card__header">
@@ -4357,9 +4176,19 @@ function renderTeamView(){
             <div class="chip-row">
               ${projects.length ? projects.slice(0, 4).map((name) => chip(name, 'outline')).join('') : chip('Пока без проектов', 'neutral')}
             </div>
+            <div class="panel" style="padding:12px;border-radius:14px;background:var(--bg-soft);box-shadow:none;">
+              <div class="mini-note" style="margin-bottom:8px;">Матрица подмены</div>
+              <div class="strong" style="font-size:13px;margin-bottom:6px;">Может подменить</div>
+              <div class="chip-row" style="margin-bottom:10px;">${substituteTargetNames.length ? substituteTargetNames.slice(0, 4).map((name) => chip(name, 'outline')).join('') : chip('Не указано', 'neutral')}</div>
+              <div class="strong" style="font-size:13px;margin-bottom:6px;">Его могут подменить</div>
+              <div class="chip-row">${coveredByNames.length ? coveredByNames.slice(0, 4).map((name) => chip(name, 'outline')).join('') : chip('Нет подмены', 'neutral')}</div>
+            </div>
             <div class="flex-between">
               <div class="mini-note">Доступность по текущей неделе: ${formatPct(metrics.currentAvailabilityPct)}</div>
-              <button class="btn btn-primary" data-action="open-employee" data-employee-id="${esc(employee.id)}">Карточка сотрудника</button>
+              <div class="btn-group">
+                <button class="btn" data-action="edit-substitutions" data-employee-id="${esc(employee.id)}">Подмена</button>
+                <button class="btn btn-primary" data-action="open-employee" data-employee-id="${esc(employee.id)}">Карточка сотрудника</button>
+              </div>
             </div>
           </article>
         `;
@@ -4371,13 +4200,14 @@ function renderTeamView(){
 
 function renderRolesView(){
   const query = ui.rolesSearch.trim().toLowerCase();
-  const roles = appData.roles.filter((role) => textMatchesSearch(`${role.name} ${role.basis} ${role.contour} ${role.comment}`, query));
-  const templates = appData.templates.filter((template) => textMatchesSearch(`${template.name} ${template.comment} ${template.leadRole} ${template.supportRole} ${template.typicalRoles.join(' ')}`, query));
+  const roles = appData.roles.filter((role) => !query || `${role.name} ${role.basis} ${role.contour}`.toLowerCase().includes(query));
+  const templates = appData.templates.filter((template) => !query || `${template.name} ${template.comment} ${template.leadRole} ${template.supportRole}`.toLowerCase().includes(query));
 
   return `
     <section class="callout callout--violet">
       <div class="callout__title">Что перенесено в этот раздел</div>
       <div>Роли и матрица подмены взяты из Excel и сверены по должностным инструкциям. Роль <strong>«Координатор отдела»</strong> для Максима Буржинского добавлена и зафиксирована как отдельная управляемая сущность.</div>
+      <div style="margin-top:8px;">Подменяемость уже влияла на систему через матрицу ролей: она участвует в проверке ведущей и поддерживающей роли на этапе. Ниже добавлен ещё и наглядный уровень по сотрудникам: теперь видно, кто кого может подменить, и отсутствие подмены повышает риск этапа.</div>
     </section>
     <section class="panel">
       <div class="toolbar">
@@ -4470,6 +4300,58 @@ function renderRolesView(){
     <section class="panel">
       <div class="flex-between wrap" style="margin-bottom:12px;">
         <div>
+          <h3 class="section-title">Матрица подмены сотрудников</h3>
+          <p class="section-subtitle">Здесь видно два слоя сразу: автоматическая подмена по ролям и явная ручная подмена по конкретным людям. Эти связи влияют на риск этапов и назначений.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="sticky-col">Сотрудник</th>
+              <th>Базовая роль</th>
+              <th>Может подменить</th>
+              <th>Его могут подменить</th>
+              <th>Ручная настройка</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${appData.employees.map((employee) => {
+              const metrics = derived.employeeMetrics[employee.id];
+              const substituteTargetNames = metrics.substituteTargetIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
+              const coveredByNames = metrics.coveredByIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
+              const explicitNames = metrics.explicitTargetIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
+              const roleBasedNames = metrics.roleBasedTargetIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name).filter(Boolean);
+              return `
+                <tr>
+                  <td class="sticky-col">
+                    <div class="strong">${esc(employee.name)}</div>
+                    <div class="mini-note">${safeText(employee.substituteNote || 'Без отдельного комментария')}</div>
+                  </td>
+                  <td>${safeText(employee.role)}</td>
+                  <td>
+                    <div class="strong" style="margin-bottom:6px;">Итоговый список</div>
+                    <div class="chip-row" style="margin-bottom:8px;">${substituteTargetNames.length ? substituteTargetNames.map((name) => chip(name, 'outline')).join('') : chip('Не указано', 'neutral')}</div>
+                    <div class="mini-note">По роли: ${roleBasedNames.length ? roleBasedNames.join(', ') : '—'}</div>
+                  </td>
+                  <td><div class="chip-row">${coveredByNames.length ? coveredByNames.map((name) => chip(name, 'outline')).join('') : chip('Нет подмены', 'neutral')}</div></td>
+                  <td>
+                    <div class="chip-row">${explicitNames.length ? explicitNames.map((name) => chip(name, 'blue')).join('') : chip('Не задана', 'neutral')}</div>
+                  </td>
+                  <td>
+                    <button class="btn btn-small" data-action="edit-substitutions" data-employee-id="${esc(employee.id)}">Настроить</button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="flex-between wrap" style="margin-bottom:12px;">
+        <div>
           <h3 class="section-title">Шаблоны этапов</h3>
           <p class="section-subtitle">Шаблоны универсальны и редактируемы. Они помогают быстро создавать этапы и автоматически подставляют роли, минимальный состав, резерв и типовую загрузку.</p>
         </div>
@@ -4531,6 +4413,7 @@ function renderDashboardView(){
   const noReserveStages = appData.stages.filter((stage) => derived.stageMetrics[stage.id]?.reserveGap);
   const shortageStages = appData.stages.filter((stage) => derived.stageMetrics[stage.id]?.minPeopleShortage > 0);
   const roleGapStages = appData.stages.filter((stage) => derived.stageMetrics[stage.id]?.missingLeadRole || derived.stageMetrics[stage.id]?.missingSupportRole);
+  const substitutionGapStages = appData.stages.filter((stage) => derived.stageMetrics[stage.id]?.backupGap);
   const vacationWeeks = derived.teamWeekly.filter((week) => week.vacationWindow);
 
   return `
@@ -4540,6 +4423,7 @@ function renderDashboardView(){
       ${renderKpiCard('Распределено', `${formatEq(currentWeek.assignedEq)} экв.`, 'Сумма назначений на неделю', 'blue')}
       ${renderKpiCard('Резерв / дефицит', `${formatEq(currentWeek.reserveEq)} экв.`, currentWeek.reserveEq < 0 ? 'Текущая неделя в дефиците' : 'Положительный запас', currentWeek.reserveEq < 0 ? 'red' : 'green')}
       ${renderKpiCard('Перегруженные недели', String(derived.teamWeekly.filter((week) => week.overloadedEmployeesCount > 0).length), 'Недели, где есть сотрудник >100%', 'red')}
+      ${renderKpiCard('Этапы без подмены', String(substitutionGapStages.length), 'Этапы, где нет доступной подмены на критичное назначение', substitutionGapStages.length ? 'red' : 'green')}
       ${renderKpiCard('Окна для отпусков', String(vacationWeeks.length), 'Недели, где команда может отпускать людей', vacationWeeks.length ? 'green' : 'yellow')}
     </section>
     <section class="chart-card chart-card--wide card">
@@ -4604,6 +4488,12 @@ function renderDashboardView(){
             <div>
               <div class="list-item__title">Этапы с нехваткой нужной роли</div>
               <div class="list-item__meta">${roleGapStages.length ? roleGapStages.map((stage) => stage.name).join(', ') : 'Нет'}</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div>
+              <div class="list-item__title">Этапы без доступной подмены</div>
+              <div class="list-item__meta">${substitutionGapStages.length ? substitutionGapStages.map((stage) => stage.name).join(', ') : 'Нет'}</div>
             </div>
           </div>
           <div class="list-item">
@@ -4863,7 +4753,11 @@ function exportXlsx(){
     'Сотрудник': employee.name,
     'Роль': employee.role,
     'Ключевая роль': employee.isKey ? 'Да' : 'Нет',
-    'Норма дня %': employee.normDayPct
+    'Норма дня %': employee.normDayPct,
+    'Может подменить сотрудников': (employee.substituteForEmployeeIds || []).map((targetId) => derived.refs.employeesById[targetId]?.name || targetId).join(' | '),
+    'Подмена по роли': (derived.employeeRoleBasedTargets[employee.id] || []).map((targetId) => derived.refs.employeesById[targetId]?.name || targetId).join(' | '),
+    'Его могут подменить': (derived.employeeCoveredByIds[employee.id] || []).map((sourceId) => derived.refs.employeesById[sourceId]?.name || sourceId).join(' | '),
+    'Комментарий по подмене': employee.substituteNote || ''
   }));
   const projectRows = appData.projects.map((project) => ({
     'ID': project.id,
@@ -5008,7 +4902,7 @@ function parseAppWorkbook(workbook){
   return {
     meta,
     projectStatuses: appData.projectStatuses.slice(),
-    stageStatuses: appData.stageStatuses.slice().map(stageStatusAlias),
+    stageStatuses: appData.stageStatuses.slice(),
     riskStatuses: appData.riskStatuses.slice(),
     presenceStatuses: read('Статусы присутствия').map((row) => ({
       code: row['Код'],
@@ -5024,7 +4918,9 @@ function parseAppWorkbook(workbook){
       name: row['Сотрудник'],
       role: row['Роль'],
       isKey: truthy(row['Ключевая роль']),
-      normDayPct: num(row['Норма дня %'], 100)
+      normDayPct: num(row['Норма дня %'], 100),
+      substituteForEmployeeIds: parseMultiValue(row['Может подменить сотрудников'] || row['Может подменить']),
+      substituteNote: row['Комментарий по подмене'] || ''
     })),
     projects: read('Проекты').map((row) => ({
       id: row['ID'],
@@ -5097,253 +4993,6 @@ function parseAppWorkbook(workbook){
 }
 
 function parseSourceWorkbook(workbook){
-  if (workbook.SheetNames.includes('01_Этапы_и_гант') && workbook.SheetNames.includes('02_Присутствие')) {
-    return parseCompactWorkbook(workbook);
-  }
-  return parseLegacySourceWorkbook(workbook);
-}
-
-function parseCompactWorkbook(workbook){
-  const toArray = (name) => XLSX.utils.sheet_to_json(workbook.Sheets[name], { header: 1, defval: null, raw: true });
-  const source00 = toArray('00_Справочники');
-  const source01 = toArray('01_Этапы_и_гант');
-  const source02 = toArray('02_Присутствие');
-
-  const catalog = normalizeData(deepClone(INITIAL_DATA));
-  const templateById = Object.fromEntries(catalog.templates.map((item) => [item.id, item]));
-  const presetStageById = Object.fromEntries(catalog.stages.map((item) => [item.id, item]));
-  const presetStageByName = Object.fromEntries(catalog.stages.map((item) => [String(item.name || '').trim().toLowerCase(), item]));
-  const presetAssignmentByKey = {};
-
-  catalog.assignments.forEach((assignment) => {
-    const stage = catalog.stages.find((item) => item.id === assignment.stageId);
-    const employee = catalog.employees.find((item) => item.id === assignment.employeeId);
-    if (!stage || !employee) return;
-    presetAssignmentByKey[`${String(stage.name || '').trim().toLowerCase()}::${String(employee.name || '').trim().toLowerCase()}`] = assignment;
-  });
-
-  const employees = [];
-  const nameToEmployeeId = {};
-  for (let row = 4; row < source00.length; row += 1) {
-    const name = source00[row]?.[7];
-    if (!name) continue;
-    const employee = {
-      id: `E${String(employees.length + 1).padStart(3, '0')}`,
-      name: String(name).trim(),
-      role: String(source00[row]?.[8] || '').trim(),
-      isKey: true,
-      normDayPct: 100
-    };
-    employees.push(employee);
-    nameToEmployeeId[employee.name] = employee.id;
-  }
-
-  const projects = [];
-  for (let row = 4; row < source00.length; row += 1) {
-    const id = source00[row]?.[10];
-    const name = source00[row]?.[11];
-    if (!id || !name) continue;
-    projects.push({
-      id: String(id).trim(),
-      name: String(name).trim(),
-      priority: String(source00[row]?.[12] || 'Средний').trim(),
-      status: String(source00[row]?.[13] || 'Активный').trim()
-    });
-  }
-
-  const presenceStatuses = [];
-  for (let row = 4; row < source00.length; row += 1) {
-    const code = source00[row]?.[0];
-    const availability = source00[row]?.[2];
-    if (!code || availability === null || availability === '') continue;
-    presenceStatuses.push({
-      code: String(code).trim(),
-      name: String(source00[row]?.[1] || code).trim(),
-      label: ({
-        'О': 'В офисе',
-        'У': 'Удаленно',
-        'ОТ': 'Отпуск',
-        'Б': 'Больничный',
-        'БУ': 'Больничный + удаленка',
-        'К': 'Командировка / выезд',
-        'В': 'Выходной',
-        'Н': 'Ночная смена',
-        'РВ': 'Рабочий выходной'
-      })[String(code).trim()] || String(source00[row]?.[1] || code).trim(),
-      availabilityPct: num(availability, 0) * 100,
-      isOffice: truthy(source00[row]?.[3]),
-      isAbsent: truthy(source00[row]?.[4]),
-      comment: String(source00[row]?.[5] || '').trim()
-    });
-  }
-
-  const rawStageStatuses = [];
-  for (let row = 4; row < source00.length; row += 1) {
-    const value = source00[row]?.[19];
-    if (!value) continue;
-    const normalized = String(value).trim();
-    if (normalized.length > 20) continue;
-    rawStageStatuses.push(stageStatusAlias(normalized));
-  }
-
-  const roles = deepClone(catalog.roles);
-  const participationTypes = deepClone(catalog.participationTypes);
-  const templates = deepClone(catalog.templates);
-  const templateByName = Object.fromEntries(templates.map((item) => [item.name, item]));
-
-  function guessTemplate(stageName, presetStage){
-    if (presetStage?.templateId && templateById[presetStage.templateId]) return templateById[presetStage.templateId];
-    const value = String(stageName || '').trim().toLowerCase();
-    if (!value) return null;
-    const rules = [
-      { keys: ['тз', 'пд', 'док', 'ид'], templateName: 'Проектирование / документация' },
-      { keys: ['смет', 'стоимост', 'расчет'], templateName: 'Расчёты / подбор оборудования' },
-      { keys: ['закуп'], templateName: 'Закупка / техоценка' },
-      { keys: ['пнр', 'интеграц'], templateName: 'ПНР / интеграция' },
-      { keys: ['монтаж', 'шкаф'], templateName: 'Монтаж / инсталляция' },
-      { keys: ['обслуж', 'поддерж', 'сервис'], templateName: 'Сервис / поддержка' },
-      { keys: ['приемк', 'приёмк'], templateName: 'Приемка / сдача' },
-      { keys: ['склад', 'логист'], templateName: 'Логистика / склад' },
-      { keys: ['презентац', 'демо', 'мероприят'], templateName: 'Демонстрация / мероприятие' },
-      { keys: ['коорд', 'учет', 'учёт', 'вход в проект'], templateName: 'Координация / управление' }
-    ];
-    const match = rules.find((rule) => rule.keys.some((key) => value.includes(key)));
-    return match ? templateByName[match.templateName] || null : null;
-  }
-
-  function guessLeadRole(stageName, template, presetStage){
-    if (presetStage?.leadRole) return presetStage.leadRole;
-    if (template?.leadRole) return template.leadRole;
-    const value = String(stageName || '').trim().toLowerCase();
-    if (value.includes('смет') || value.includes('стоимост') || value.includes('расчет')) return 'Закупщик';
-    if (value.includes('шкаф') || value.includes('монтаж')) return 'Старший инженер';
-    if (value.includes('пнр') || value.includes('интеграц')) return 'Ведущий инженер';
-    if (value.includes('склад')) return 'Инженер';
-    if (value.includes('презентац') || value.includes('демо') || value.includes('мероприят')) return 'Старший инженер';
-    if (value.includes('коорд') || value.includes('учет') || value.includes('учёт')) return 'Координатор отдела';
-    return 'Проектировщик';
-  }
-
-  function guessSupportRole(stageName, template, presetStage){
-    if (presetStage?.supportRole) return presetStage.supportRole;
-    if (template?.supportRole) return template.supportRole;
-    const value = String(stageName || '').trim().toLowerCase();
-    if (value.includes('смет') || value.includes('стоимост')) return 'ГИП';
-    if (value.includes('шкаф') || value.includes('монтаж')) return 'Инженер';
-    if (value.includes('пнр') || value.includes('интеграц')) return 'Старший инженер';
-    if (value.includes('коорд') || value.includes('учет') || value.includes('учёт')) return 'Руководитель';
-    return '';
-  }
-
-  function guessParticipationType(index, total, role, leadRole, presetAssignment){
-    if (presetAssignment?.participationType) return presetAssignment.participationType;
-    if (total <= 1) return 'Лид';
-    if (index === 0 || role === leadRole) return 'Лид';
-    if (index === 1) return 'Основной';
-    return 'Поддержка';
-  }
-
-  const stages = [];
-  const assignments = [];
-  for (let row = 4; row < source01.length; row += 1) {
-    const id = source01[row]?.[0];
-    if (!id) continue;
-
-    const stageName = String(source01[row]?.[3] || '').trim();
-    const presetStage = presetStageById[String(id).trim()] || presetStageByName[stageName.toLowerCase()] || null;
-    const template = guessTemplate(stageName, presetStage);
-    const leadRole = guessLeadRole(stageName, template, presetStage);
-    const supportRole = guessSupportRole(stageName, template, presetStage);
-    const stage = {
-      id: String(id).trim(),
-      projectId: String(source01[row]?.[1] || '').trim(),
-      name: stageName,
-      priority: String(source01[row]?.[4] || 'Средний').trim(),
-      startDate: toISO(source01[row]?.[7]),
-      endDate: toISO(source01[row]?.[8]),
-      plannedLoadPct: num(source01[row]?.[9], presetStage?.plannedLoadPct ? presetStage.plannedLoadPct / 100 : (template?.defaultLoadPct ? template.defaultLoadPct / 100 : 0)) * 100,
-      status: stageStatusAlias(source01[row]?.[6] || source01[row]?.[5] || presetStage?.status || 'Запланирован'),
-      templateId: presetStage?.templateId || template?.id || '',
-      leadRole,
-      supportRole,
-      minPeople: Math.max(1, Math.round(num(source01[row]?.[10], presetStage?.minPeople || template?.minPeople || 1))),
-      needsReserve: presetStage ? Boolean(presetStage.needsReserve) : Boolean(template?.needsReserve),
-      comment: String(source01[row]?.[19] || presetStage?.comment || '').trim()
-    };
-    stages.push(stage);
-
-    const employeeNames = [14, 15, 16, 17, 18]
-      .map((column) => source01[row]?.[column])
-      .map((value) => String(value || '').trim())
-      .filter(Boolean);
-
-    employeeNames.forEach((employeeName, index) => {
-      const employeeId = nameToEmployeeId[employeeName];
-      if (!employeeId) return;
-      const employee = employees.find((item) => item.id === employeeId) || null;
-      const presetAssignment = presetAssignmentByKey[`${stageName.toLowerCase()}::${employeeName.toLowerCase()}`] || null;
-      assignments.push({
-        id: `A${String(assignments.length + 1).padStart(3, '0')}`,
-        stageId: stage.id,
-        employeeId,
-        stageRole: presetAssignment?.stageRole || employee?.role || leadRole,
-        participationType: guessParticipationType(index, employeeNames.length, employee?.role, leadRole, presetAssignment),
-        manualLoadPct: presetAssignment?.manualLoadPct ?? null,
-        startDate: stage.startDate,
-        endDate: stage.endDate,
-        comment: String(presetAssignment?.comment || '').trim()
-      });
-    });
-  }
-
-  const presenceEntries = [];
-  const presenceHeaderRow = source02[2] || [];
-  const allPresenceDates = presenceHeaderRow.filter(Boolean).map((value) => toISO(value)).filter(Boolean);
-  const lastPresenceDate = allPresenceDates.at(-1) || '2026-12-31';
-
-  for (let row = 4; row < source02.length; row += 1) {
-    const employeeName = String(source02[row]?.[0] || '').trim();
-    if (!employeeName) continue;
-    const employeeId = nameToEmployeeId[employeeName];
-    if (!employeeId) continue;
-    for (let col = 4; col < presenceHeaderRow.length; col += 1) {
-      const dateIso = toISO(presenceHeaderRow[col]);
-      const code = source02[row]?.[col];
-      if (!dateIso || !code) continue;
-      if (String(code).trim() === 'В' && isWeekend(dateIso)) continue;
-      presenceEntries.push({
-        employeeId,
-        date: dateIso,
-        statusCode: String(code).trim()
-      });
-    }
-  }
-
-  return {
-    meta: {
-      title: 'Планирование ресурсов инженерной команды',
-      snapshotDate: '2026-04-10',
-      presenceHorizonStart: toISO(presenceHeaderRow[4]) || '2026-04-01',
-      unfixedRuleStart: '2026-04-13',
-      presenceHorizonEnd: lastPresenceDate,
-      source: 'Excel + должностные инструкции'
-    },
-    projectStatuses: unique([...projects.map((project) => project.status), 'Активный', 'Сопровождение', 'Постобслуживание', 'Пауза', 'Завершен']),
-    stageStatuses: unique([...rawStageStatuses, 'Запланирован', 'В работе', 'Просрочен', 'Пауза', 'Завершен']),
-    riskStatuses: ['Норма', 'Внимание', 'Риск', 'Просрочено'],
-    presenceStatuses,
-    employees,
-    projects,
-    roles,
-    participationTypes,
-    templates,
-    stages,
-    assignments,
-    presenceEntries
-  };
-}
-
-function parseLegacySourceWorkbook(workbook){
   const toArray = (name) => XLSX.utils.sheet_to_json(workbook.Sheets[name], { header: 1, defval: null, raw: false });
   const source00 = toArray('00_Справочники');
   const source01 = toArray('01_Присутствие');
@@ -5470,7 +5119,7 @@ function parseLegacySourceWorkbook(workbook){
       startDate: toISO(source02[row]?.[5]),
       endDate: toISO(source02[row]?.[6]),
       plannedLoadPct: num(source02[row]?.[7], 0) * 100,
-      status: stageStatusAlias(source02[row]?.[8]),
+      status: source02[row]?.[8],
       templateId: template?.id || '',
       leadRole: source02[row]?.[19] || template?.leadRole || '',
       supportRole: source02[row]?.[20] || template?.supportRole || '',
@@ -5518,14 +5167,14 @@ function parseLegacySourceWorkbook(workbook){
   return {
     meta: {
       title: 'Планирование ресурсов инженерной команды',
-      snapshotDate: '2026-04-10',
-      presenceHorizonStart: toISO(source01[1]?.[4]) || '2026-04-01',
+      snapshotDate: '2026-04-09',
+      presenceHorizonStart: toISO(source01[1]?.[4]) || '2026-04-08',
       unfixedRuleStart: '2026-04-13',
       presenceHorizonEnd: toISO(source01[1]?.[source01[1].length - 1]) || '2026-12-31',
       source: 'Excel + должностные инструкции'
     },
     projectStatuses: ['Активный', 'Сопровождение', 'Постобслуживание', 'Пауза', 'Завершен'],
-    stageStatuses: ['Запланирован', 'В работе', 'Просрочен', 'Пауза', 'Завершен'],
+    stageStatuses: ['Запланировано', 'В работе', 'Просрочено', 'Завершено'],
     riskStatuses: ['Норма', 'Внимание', 'Риск', 'Просрочено'],
     presenceStatuses,
     employees,
@@ -5554,101 +5203,6 @@ function setPresenceValue(employeeId, dateIso, statusCode){
   }
 }
 
-function makeStageDraftId(){
-  return `D${String(stageDraftSequence++).padStart(4, '0')}`;
-}
-
-function getParticipationWeightByName(typeName){
-  return num(appData.participationTypes.find((item) => item.name === typeName)?.weight, 1);
-}
-
-function createStageAssignmentDraft(source = {}, stageDefaults = {}){
-  const employee = appData.employees.find((item) => item.id === source.employeeId);
-  return {
-    rowId: source.rowId || source.id || makeStageDraftId(),
-    existingId: source.existingId || source.id || '',
-    employeeId: source.employeeId || '',
-    stageRole: source.stageRole || employee?.role || stageDefaults.leadRole || '',
-    participationType: source.participationType || 'Основной',
-    manualLoadPct: source.manualLoadPct === '' || source.manualLoadPct === undefined || source.manualLoadPct === null
-      ? null
-      : num(source.manualLoadPct, 0),
-    startDate: toISO(source.startDate) || stageDefaults.startDate || '',
-    endDate: toISO(source.endDate) || stageDefaults.endDate || '',
-    comment: String(source.comment || '').trim()
-  };
-}
-
-function normalizeStageAssignmentDrafts(rawDrafts, stageDefaults = {}){
-  return ensureArray(rawDrafts).map((draft) => {
-    const normalized = createStageAssignmentDraft(draft, stageDefaults);
-    const employee = appData.employees.find((item) => item.id === normalized.employeeId);
-    return {
-      ...normalized,
-      stageRole: normalized.stageRole || employee?.role || ''
-    };
-  });
-}
-
-function computeStageAssignmentDraftMetrics(stageState, rawDrafts){
-  const drafts = normalizeStageAssignmentDrafts(rawDrafts, stageState).filter((draft) => draft.employeeId);
-  const totalWeight = round(drafts.reduce((sum, draft) => sum + getParticipationWeightByName(draft.participationType), 0), 1);
-  const denominator = Math.max(num(stageState.minPeople, 1), totalWeight || 0, 1);
-  const metrics = {};
-
-  drafts.forEach((draft) => {
-    const weight = getParticipationWeightByName(draft.participationType);
-    const autoLoadPct = round(num(stageState.plannedLoadPct, 0) * weight / denominator, 1);
-    const hasManual = draft.manualLoadPct !== null && draft.manualLoadPct !== undefined && draft.manualLoadPct !== '';
-    const finalLoadPct = hasManual ? num(draft.manualLoadPct, 0) : autoLoadPct;
-    const roleFit = (!stageState.leadRole && !stageState.supportRole)
-      ? true
-      : (derived?.fitsRoleForTarget?.(draft.stageRole, stageState.leadRole) || derived?.fitsRoleForTarget?.(draft.stageRole, stageState.supportRole) || false);
-
-    metrics[draft.rowId] = {
-      weight,
-      autoLoadPct,
-      finalLoadPct,
-      roleFit
-    };
-  });
-
-  const totalFinalLoadPct = round(Object.values(metrics).reduce((sum, item) => sum + num(item.finalLoadPct, 0), 0), 1);
-  return {
-    metrics,
-    denominator,
-    totalWeight,
-    filledCount: drafts.length,
-    totalFinalLoadPct,
-    uncoveredLoadPct: Math.max(0, round(num(stageState.plannedLoadPct, 0) - totalFinalLoadPct, 1))
-  };
-}
-
-function syncStageAssignments(stageId, rawDrafts, stageDefaults){
-  const drafts = normalizeStageAssignmentDrafts(rawDrafts, stageDefaults).filter((draft) => draft.employeeId);
-  const idPool = appData.assignments.slice();
-  const syncedAssignments = drafts.map((draft) => {
-    const employee = appData.employees.find((item) => item.id === draft.employeeId);
-    const id = draft.existingId || makeId('A', idPool);
-    if (!draft.existingId) idPool.push({ id });
-    return {
-      id,
-      stageId,
-      employeeId: draft.employeeId,
-      stageRole: draft.stageRole || employee?.role || '',
-      participationType: draft.participationType || 'Основной',
-      manualLoadPct: draft.manualLoadPct === '' ? null : draft.manualLoadPct,
-      startDate: toISO(draft.startDate) || stageDefaults.startDate || '',
-      endDate: toISO(draft.endDate) || stageDefaults.endDate || '',
-      comment: String(draft.comment || '').trim()
-    };
-  });
-
-  appData.assignments = appData.assignments
-    .filter((assignment) => assignment.stageId !== stageId)
-    .concat(syncedAssignments);
-}
-
 function openStageModal(stageId = null, projectId = ui.projectId){
   const stage = stageId ? appData.stages.find((item) => item.id === stageId) : null;
   const base = stage ? { ...stage } : {
@@ -5668,14 +5222,9 @@ function openStageModal(stageId = null, projectId = ui.projectId){
     comment: ''
   };
 
-  const existingDrafts = stage
-    ? (appData.assignments.filter((item) => item.stageId === stage.id).map((assignment) => createStageAssignmentDraft(assignment, base)))
-    : [createStageAssignmentDraft({}, base)];
-
   const content = `
     <form data-form="stage" class="flex-col" style="gap:18px;">
       <input type="hidden" name="id" value="${esc(base.id)}" />
-      <input type="hidden" name="assignmentDraftsJson" value="${esc(JSON.stringify(existingDrafts))}" />
       <div class="form-grid form-grid--3">
         <div class="field">
           <label>Проект</label>
@@ -5744,194 +5293,27 @@ function openStageModal(stageId = null, projectId = ui.projectId){
           <textarea name="comment" class="textarea" placeholder="Что важно учесть по этапу">${esc(base.comment)}</textarea>
         </div>
       </div>
-
       <div class="callout callout--blue">
-        <div class="callout__title">Теперь этап и назначения создаются в одном окне</div>
-        <div>Ниже можно сразу назначить сотрудников, выбрать для каждого роль в этапе, тип участия, ручную загрузку и даты. Автозагрузка и итоговая загрузка видны сразу, без перехода в отдельный раздел.</div>
+        <div class="callout__title">Подсказка по шаблону</div>
+        <div>Если выбрать шаблон, ведущая роль, поддержка, минимальный состав, резерв и типовая загрузка можно быстро подставить и затем скорректировать вручную.</div>
       </div>
-
-      <section class="stage-assign-editor">
-        <div class="stage-assign-editor__head">
-          <div>
-            <h3 class="section-title" style="margin:0;">Сразу назначить людей на этап</h3>
-            <p class="section-subtitle">Одна карточка ниже = один сотрудник на этом этапе. Дубликаты по сотруднику внутри этапа блокируются.</p>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn" data-stage-draft-sync-dates>Применить даты этапа всем</button>
-            <button type="button" class="btn btn-primary" data-stage-draft-add>Добавить сотрудника</button>
-          </div>
-        </div>
-        <div class="stage-assign-editor__summary" id="stageDraftSummary"></div>
-        <div id="stageInlineAssignments" class="stage-assign-list"></div>
-      </section>
-
-      <div class="callout callout--yellow">
-        <div class="callout__title">Как считается загрузка в этом окне</div>
-        <div><strong>Автоматическая</strong> = плановая загрузка этапа × вес типа участия / max(минимальный состав, сумма весов назначений). <strong>Итоговая</strong> = ручная, если она заполнена; иначе автоматическая.</div>
-      </div>
-
       <div class="modal__footer">
-        <div class="mini-note">После сохранения пересчитаются риск этапа, загрузка сотрудников, нехватка ролей, резерв и конфликты с отсутствием.</div>
+        <div class="mini-note">После сохранения риск-статус пересчитается автоматически и будет виден сразу в проекте.</div>
         <div class="btn-group">
           <button type="button" class="btn" data-action="close-modal">Отмена</button>
-          <button type="submit" class="btn btn-primary">Сохранить этап и назначения</button>
+          <button type="submit" class="btn btn-primary">Сохранить этап</button>
         </div>
       </div>
     </form>
   `;
 
   openModal({
-    title: stage ? 'Изменить этап и назначения' : 'Добавить этап и сразу назначить людей',
+    title: stage ? 'Изменить этап' : 'Добавить этап',
     subtitle: projectId ? `Проект ${projectId}` : 'Новый этап',
-    wide: true,
     content,
     onOpen(modal) {
       const form = modal.querySelector('form');
       const templateSelect = form.querySelector('[name="templateId"]');
-      const hiddenDraftsInput = form.querySelector('[name="assignmentDraftsJson"]');
-      const assignmentsContainer = modal.querySelector('#stageInlineAssignments');
-      const summaryContainer = modal.querySelector('#stageDraftSummary');
-      let draftAssignments = normalizeStageAssignmentDrafts(existingDrafts, base);
-
-      const getStageState = () => ({
-        startDate: toISO(form.querySelector('[name="startDate"]').value) || '',
-        endDate: toISO(form.querySelector('[name="endDate"]').value) || '',
-        plannedLoadPct: num(form.querySelector('[name="plannedLoadPct"]').value, 0),
-        minPeople: Math.max(1, Math.round(num(form.querySelector('[name="minPeople"]').value, 1))),
-        leadRole: form.querySelector('[name="leadRole"]').value || '',
-        supportRole: form.querySelector('[name="supportRole"]').value || ''
-      });
-
-      const persistDrafts = () => {
-        hiddenDraftsInput.value = JSON.stringify(draftAssignments);
-      };
-
-      const addDraft = (patch = {}) => {
-        const stageState = getStageState();
-        const rowNumber = draftAssignments.length + 1;
-        const suggestedRole = rowNumber === 1 ? (stageState.leadRole || '') : (rowNumber === 2 ? (stageState.supportRole || '') : '');
-        draftAssignments.push(createStageAssignmentDraft({
-          stageRole: patch.stageRole || suggestedRole,
-          participationType: patch.participationType || (rowNumber === 1 ? 'Лид' : 'Основной'),
-          startDate: patch.startDate || stageState.startDate,
-          endDate: patch.endDate || stageState.endDate,
-          manualLoadPct: patch.manualLoadPct ?? null,
-          comment: patch.comment || ''
-        }, stageState));
-        renderDraftAssignments();
-      };
-
-      const renderDraftAssignments = () => {
-        const stageState = getStageState();
-        const preview = computeStageAssignmentDraftMetrics(stageState, draftAssignments);
-        summaryContainer.innerHTML = [
-          badge(`Назначений: ${preview.filledCount}`, preview.filledCount ? 'blue' : 'neutral'),
-          badge(`Весов всего: ${preview.totalWeight || 0}`, 'outline'),
-          badge(`Делитель автозагрузки: ${preview.denominator}`, 'outline'),
-          badge(`Закрытая загрузка: ${formatPct(preview.totalFinalLoadPct)}`, preview.totalFinalLoadPct >= stageState.plannedLoadPct ? 'green' : 'yellow'),
-          badge(`Незакрыто: ${formatPct(preview.uncoveredLoadPct)}`, preview.uncoveredLoadPct > 0 ? 'yellow' : 'green')
-        ].join('');
-
-        if (!draftAssignments.length) {
-          assignmentsContainer.innerHTML = `
-            <div class="stage-assign-empty">
-              Люди на этап пока не добавлены. Нажмите «Добавить сотрудника» и заполните роль, тип участия и даты прямо здесь.
-            </div>
-          `;
-          persistDrafts();
-          return;
-        }
-
-        assignmentsContainer.innerHTML = draftAssignments.map((draft, index) => {
-          const employee = appData.employees.find((item) => item.id === draft.employeeId);
-          const rowMetric = preview.metrics[draft.rowId] || { autoLoadPct: 0, finalLoadPct: 0, roleFit: true };
-          const selectedOtherEmployees = new Set(draftAssignments.filter((item) => item.rowId !== draft.rowId).map((item) => item.employeeId).filter(Boolean));
-
-          return `
-            <article class="stage-assign-card" data-stage-draft-row="${esc(draft.rowId)}">
-              <div class="stage-assign-card__head">
-                <div>
-                  <div class="strong">Назначение ${index + 1}</div>
-                  <div class="mini-note">${employee ? `${esc(employee.name)} • ${esc(employee.role)}` : 'Выберите сотрудника и настройте его участие в этапе'}</div>
-                </div>
-                <div class="btn-group">
-                  ${draft.existingId ? badge('Уже сохранено', 'outline') : badge('Новое', 'blue')}
-                  ${badge(`Авто ${formatPct(rowMetric.autoLoadPct)}`, 'outline')}
-                  ${badge(`Итог ${formatPct(rowMetric.finalLoadPct)}`, toneForLoadPct(rowMetric.finalLoadPct))}
-                  <button type="button" class="btn btn-small btn-danger" data-stage-draft-remove="${esc(draft.rowId)}">Удалить</button>
-                </div>
-              </div>
-
-              <div class="stage-assign-grid">
-                <div class="field">
-                  <label>Сотрудник</label>
-                  <select class="select" data-stage-draft-field="employeeId" data-row-id="${esc(draft.rowId)}">
-                    <option value="">Выберите сотрудника</option>
-                    ${appData.employees.map((currentEmployee) => {
-                      const disabled = selectedOtherEmployees.has(currentEmployee.id);
-                      return `<option value="${esc(currentEmployee.id)}" ${draft.employeeId === currentEmployee.id ? 'selected' : ''} ${disabled ? 'disabled' : ''}>${esc(currentEmployee.name)} • ${esc(currentEmployee.role)}</option>`;
-                    }).join('')}
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label>Роль в этапе</label>
-                  <select class="select" data-stage-draft-field="stageRole" data-row-id="${esc(draft.rowId)}">
-                    <option value="">—</option>
-                    ${appData.roles.map((role) => `<option value="${esc(role.name)}" ${draft.stageRole === role.name ? 'selected' : ''}>${esc(role.name)}</option>`).join('')}
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label>Тип участия</label>
-                  <select class="select" data-stage-draft-field="participationType" data-row-id="${esc(draft.rowId)}">
-                    ${appData.participationTypes.map((type) => `<option value="${esc(type.name)}" ${draft.participationType === type.name ? 'selected' : ''}>${esc(type.name)}</option>`).join('')}
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label>Ручная загрузка, %</label>
-                  <input class="input" type="number" min="0" step="1" placeholder="Пусто = авто" value="${draft.manualLoadPct === null || draft.manualLoadPct === undefined ? '' : esc(draft.manualLoadPct)}" data-stage-draft-field="manualLoadPct" data-row-id="${esc(draft.rowId)}" />
-                </div>
-
-                <div class="field">
-                  <label>Дата начала участия</label>
-                  <input class="input" type="date" value="${esc(draft.startDate)}" data-stage-draft-field="startDate" data-row-id="${esc(draft.rowId)}" />
-                </div>
-
-                <div class="field">
-                  <label>Дата окончания участия</label>
-                  <input class="input" type="date" value="${esc(draft.endDate)}" data-stage-draft-field="endDate" data-row-id="${esc(draft.rowId)}" />
-                </div>
-
-                <div class="field">
-                  <label>Автоматическая загрузка</label>
-                  <div class="callout callout--blue">
-                    <div><strong>${formatPct(rowMetric.autoLoadPct)}</strong></div>
-                    <div class="mini-note">Считается от плановой загрузки этапа, типа участия и числа назначенных людей.</div>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label>Проверка роли</label>
-                  <div class="callout ${rowMetric.roleFit ? 'callout--blue' : 'callout--yellow'}">
-                    <div><strong>${rowMetric.roleFit ? 'Роль подходит' : 'Проверьте роль'}</strong></div>
-                    <div class="mini-note">${rowMetric.roleFit ? 'Назначение закрывает одну из ролей этапа.' : 'Роль сотрудника и роль в этапе не закрывают ведущую или поддерживающую роль.'}</div>
-                  </div>
-                </div>
-
-                <div class="field field--wide">
-                  <label>Комментарий</label>
-                  <input class="input" type="text" placeholder="Например, подключается только на проверки или ведёт согласование" value="${esc(draft.comment)}" data-stage-draft-field="comment" data-row-id="${esc(draft.rowId)}" />
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
-
-        persistDrafts();
-      };
-
       templateSelect.addEventListener('change', () => {
         const template = appData.templates.find((item) => item.id === templateSelect.value);
         if (!template) return;
@@ -5940,87 +5322,7 @@ function openStageModal(stageId = null, projectId = ui.projectId){
         form.querySelector('[name="minPeople"]').value = template.minPeople || 1;
         form.querySelector('[name="plannedLoadPct"]').value = template.defaultLoadPct || 50;
         form.querySelector('[name="needsReserve"]').checked = Boolean(template.needsReserve);
-        renderDraftAssignments();
       });
-
-      modal.addEventListener('click', (event) => {
-        const addButton = event.target.closest('[data-stage-draft-add]');
-        if (addButton) {
-          addDraft();
-          return;
-        }
-
-        const syncDatesButton = event.target.closest('[data-stage-draft-sync-dates]');
-        if (syncDatesButton) {
-          const stageState = getStageState();
-          draftAssignments = draftAssignments.map((draft) => ({
-            ...draft,
-            startDate: stageState.startDate,
-            endDate: stageState.endDate
-          }));
-          renderDraftAssignments();
-          return;
-        }
-
-        const removeButton = event.target.closest('[data-stage-draft-remove]');
-        if (removeButton) {
-          draftAssignments = draftAssignments.filter((draft) => draft.rowId !== removeButton.dataset.stageDraftRemove);
-          renderDraftAssignments();
-        }
-      });
-
-      modal.addEventListener('input', (event) => {
-        const field = event.target.dataset.stageDraftField;
-        if (!field || !['manualLoadPct', 'comment', 'startDate', 'endDate'].includes(field)) return;
-        const rowId = event.target.dataset.rowId;
-        draftAssignments = draftAssignments.map((draft) => {
-          if (draft.rowId !== rowId) return draft;
-          return {
-            ...draft,
-            [field]: field === 'manualLoadPct'
-              ? (event.target.value === '' ? null : num(event.target.value, 0))
-              : event.target.value
-          };
-        });
-        persistDrafts();
-      });
-
-      modal.addEventListener('change', (event) => {
-        const field = event.target.dataset.stageDraftField;
-        if (field) {
-          const rowId = event.target.dataset.rowId;
-          draftAssignments = draftAssignments.map((draft) => {
-            if (draft.rowId !== rowId) return draft;
-            const nextValue = field === 'manualLoadPct'
-              ? (event.target.value === '' ? null : num(event.target.value, 0))
-              : event.target.value;
-
-            if (field === 'employeeId') {
-              const previousEmployee = appData.employees.find((item) => item.id === draft.employeeId);
-              const nextEmployee = appData.employees.find((item) => item.id === nextValue);
-              const shouldReplaceRole = !draft.stageRole || draft.stageRole === previousEmployee?.role;
-              return {
-                ...draft,
-                employeeId: nextValue,
-                stageRole: shouldReplaceRole ? (nextEmployee?.role || draft.stageRole) : draft.stageRole
-              };
-            }
-
-            return {
-              ...draft,
-              [field]: nextValue
-            };
-          });
-          renderDraftAssignments();
-          return;
-        }
-
-        if (['startDate', 'endDate', 'plannedLoadPct', 'minPeople', 'leadRole', 'supportRole'].includes(event.target.name)) {
-          renderDraftAssignments();
-        }
-      });
-
-      renderDraftAssignments();
     }
   });
 }
@@ -6106,7 +5408,7 @@ function openBulkAssignmentModal(stageId = ''){
         const query = employeeSearch.value.trim().toLowerCase();
         const existingEmployees = new Set((derived.assignmentsByStage[stageSelect.value] || []).map((assignment) => assignment.employeeId));
         container.innerHTML = appData.employees
-          .filter((employee) => textMatchesSearch(`${employee.name} ${employee.role}`, query))
+          .filter((employee) => !query || `${employee.name} ${employee.role}`.toLowerCase().includes(query))
           .map((employee) => {
             const disabled = existingEmployees.has(employee.id);
             return `
@@ -6373,6 +5675,10 @@ function openEmployeeModal(employeeId){
   const monthEnd = minIso(getMonthEnd(monthKey), appData.meta.presenceHorizonEnd);
   const dates = listDatesInRange(monthStart, monthEnd);
   const chartId = `employeeChart_${employeeId}`;
+  const substituteTargetNames = metrics.substituteTargetIds.map((item) => derived.refs.employeesById[item]?.name).filter(Boolean);
+  const coveredByNames = metrics.coveredByIds.map((item) => derived.refs.employeesById[item]?.name).filter(Boolean);
+  const explicitTargetNames = metrics.explicitTargetIds.map((item) => derived.refs.employeesById[item]?.name).filter(Boolean);
+  const roleBasedTargetNames = metrics.roleBasedTargetIds.map((item) => derived.refs.employeesById[item]?.name).filter(Boolean);
 
   const content = `
     <div class="kpi-grid">
@@ -6403,6 +5709,26 @@ function openEmployeeModal(employeeId){
         weeks: derived.weeks
       })}
     </section>
+    <section class="split-2">
+      <article class="panel">
+        <div class="flex-between wrap" style="margin-bottom:12px;">
+          <div>
+            <h3 class="section-title">Кого может подменить</h3>
+            <p class="section-subtitle">Итоговый список = подмена по роли + явные ручные связи.</p>
+          </div>
+          <button class="btn" data-action="edit-substitutions" data-employee-id="${esc(employee.id)}">Настроить</button>
+        </div>
+        <div class="chip-row" style="margin-bottom:10px;">${substituteTargetNames.length ? substituteTargetNames.map((name) => chip(name, 'outline')).join('') : chip('Не указано', 'neutral')}</div>
+        <div class="mini-note">По роли: ${roleBasedTargetNames.length ? roleBasedTargetNames.join(', ') : '—'}</div>
+        <div class="mini-note">Явно указано: ${explicitTargetNames.length ? explicitTargetNames.join(', ') : '—'}</div>
+        <div class="mini-note" style="margin-top:8px;">${safeText(employee.substituteNote || 'Без отдельного комментария')}</div>
+      </article>
+      <article class="panel">
+        <h3 class="section-title">Кто может подменить этого сотрудника</h3>
+        <p class="section-subtitle">Этот список система использует, когда оценивает риск этапа при отпуске, больничном, перегрузе и работе этапа на одном человеке.</p>
+        <div class="chip-row">${coveredByNames.length ? coveredByNames.map((name) => chip(name, 'outline')).join('') : chip('Нет подмены', 'red')}</div>
+      </article>
+    </section>
     <section class="table-wrap">
       <table class="table">
         <thead>
@@ -6412,6 +5738,7 @@ function openEmployeeModal(employeeId){
             <th>Тип участия</th>
             <th>Итоговая загрузка</th>
             <th>Участие</th>
+            <th>Подмена</th>
             <th>Риск</th>
           </tr>
         </thead>
@@ -6426,7 +5753,17 @@ function openEmployeeModal(employeeId){
               <td>${safeText(assignment.participationType)}</td>
               <td>${badge(formatPct(metric.finalLoadPct), toneForLoadPct(metric.finalLoadPct))}</td>
               <td>${formatDate(assignment.startDate)} — ${formatDate(assignment.endDate)}</td>
-              <td>${badge(metric.risk, metric.risk === 'Норма' ? 'green' : metric.risk.includes('Перегруз') ? 'red' : metric.risk.includes('Отсутствие') ? 'yellow' : 'violet')}</td>
+              <td>
+                ${badge(metric.replacementStatus, metric.replacementStatus === 'Подмена доступна' ? 'green' : metric.replacementStatus === 'Нет подмены' ? 'red' : 'yellow')}
+                <div class="mini-note" style="margin-top:6px;">
+                  ${metric.availableReplacementIds.length
+                    ? metric.availableReplacementIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name || employeeId).join(', ')
+                    : metric.replacementCandidateIds.length
+                      ? metric.replacementCandidateIds.map((employeeId) => derived.refs.employeesById[employeeId]?.name || employeeId).join(', ')
+                      : 'Не указана'}
+                </div>
+              </td>
+              <td>${badge(metric.risk, metric.risk === 'Норма' ? 'green' : metric.risk.includes('без подмены') || metric.risk.includes('Перегруз') ? 'red' : metric.risk.includes('Отсутствие') ? 'yellow' : 'violet')}</td>
             </tr>
           `).join('')}
         </tbody>
@@ -6491,6 +5828,97 @@ function openEmployeeModal(employeeId){
           scales: { y: { beginAtZero: true } },
           plugins: { legend: { position: 'top' } }
         }
+      });
+    }
+  });
+}
+
+
+function openSubstitutionModal(employeeId){
+  const employee = derived.refs.employeesById[employeeId];
+  if (!employee) return;
+  const metrics = derived.employeeMetrics[employeeId];
+  const content = `
+    <form data-form="employee-substitutions" class="flex-col" style="gap:18px;">
+      <input type="hidden" name="employeeId" value="${esc(employee.id)}" />
+      <div class="callout callout--blue">
+        <div class="callout__title">Как работает подмена</div>
+        <div>Система уже использует подмену по ролям из матрицы ролей. В этом окне можно явно указать конкретных людей, которых <strong>${esc(employee.name)}</strong> может подменять сверх базовой роли.</div>
+      </div>
+      <div class="form-grid form-grid--3">
+        <div class="field field--full">
+          <label>Подмена по роли (работает автоматически)</label>
+          <div class="chip-row">${metrics.roleBasedTargetIds.length ? metrics.roleBasedTargetIds.map((targetId) => chip(derived.refs.employeesById[targetId]?.name || targetId, 'outline')).join('') : chip('По роли никого не подменяет', 'neutral')}</div>
+          <div class="mini-note" style="margin-top:8px;">Этот список меняется в разделе «Роли и шаблоны этапов», потому что он зависит от матрицы ролей.</div>
+        </div>
+        <div class="field field--full">
+          <label for="substitutionSearch">Поиск по сотрудникам</label>
+          <input id="substitutionSearch" name="substitutionSearch" class="input" placeholder="Имя, роль или проект" />
+        </div>
+        <div class="field field--full">
+          <label>Явно указать, кого может подменить ${esc(employee.name)}</label>
+          <div id="substitutionTargets" class="checkbox-grid"></div>
+        </div>
+        <div class="field field--full">
+          <label>Комментарий по подмене</label>
+          <textarea name="substituteNote" class="textarea" placeholder="Например: может подхватывать только удалённые задачи, без выездов">${esc(employee.substituteNote || '')}</textarea>
+        </div>
+        <div class="field field--full">
+          <label>Кто может подменить этого сотрудника сейчас</label>
+          <div class="chip-row">${metrics.coveredByIds.length ? metrics.coveredByIds.map((sourceId) => chip(derived.refs.employeesById[sourceId]?.name || sourceId, 'outline')).join('') : chip('Нет подмены', 'red')}</div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <div class="mini-note">Отсутствие подмены влияет на риск этапа, если этап завязан на одном человеке, есть перегруз или конфликт по присутствию.</div>
+        <div class="btn-group">
+          <button type="button" class="btn" data-action="close-modal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить подмену</button>
+        </div>
+      </div>
+    </form>
+  `;
+
+  openModal({
+    title: `Подмена: ${employee.name}`,
+    subtitle: employee.role,
+    wide: true,
+    content,
+    onOpen(modal) {
+      const container = modal.querySelector('#substitutionTargets');
+      const searchInput = modal.querySelector('[name="substitutionSearch"]');
+      const selectedIds = new Set(employee.substituteForEmployeeIds || []);
+      const renderTargets = () => {
+        const query = String(searchInput.value || '').trim().toLowerCase();
+        container.innerHTML = appData.employees
+          .filter((candidate) => candidate.id !== employee.id)
+          .filter((candidate) => {
+            if (!query) return true;
+            return `${candidate.name} ${candidate.role}`.toLowerCase().includes(query);
+          })
+          .map((candidate) => `
+            <label class="check-card">
+              <div style="display:flex;gap:10px;align-items:flex-start;">
+                <input type="checkbox" name="substituteForEmployeeIds" value="${esc(candidate.id)}" ${selectedIds.has(candidate.id) ? 'checked' : ''} />
+                <div class="check-card__meta">
+                  <div class="strong">${esc(candidate.name)}</div>
+                  <div class="mini-note">${esc(candidate.role)}</div>
+                </div>
+              </div>
+              <div class="chip-row">
+                ${metrics.roleBasedTargetIds.includes(candidate.id) ? chip('По роли', 'green') : ''}
+                ${selectedIds.has(candidate.id) ? chip('Явно', 'blue') : ''}
+              </div>
+            </label>
+          `).join('');
+      };
+      renderTargets();
+      searchInput.addEventListener('input', renderTargets);
+      container.addEventListener('change', (event) => {
+        const input = event.target;
+        if (!(input instanceof HTMLInputElement)) return;
+        if (input.checked) selectedIds.add(input.value);
+        else selectedIds.delete(input.value);
+        renderTargets();
       });
     }
   });
@@ -6602,6 +6030,9 @@ function handleClick(event){
     case 'open-employee':
       openEmployeeModal(actionTarget.dataset.employeeId);
       return;
+    case 'edit-substitutions':
+      openSubstitutionModal(actionTarget.dataset.employeeId);
+      return;
     case 'add-role':
       openRoleModal();
       return;
@@ -6656,11 +6087,6 @@ function handleInputOrChange(event){
 
   if (target.dataset.uiKey) {
     ui[target.dataset.uiKey] = target.type === 'checkbox' ? target.checked : target.value;
-    if (SEARCH_UI_KEYS.has(target.dataset.uiKey) && event.type === 'input') {
-      scheduleUiRender(target);
-      return;
-    }
-    pendingUiFocusRestore = null;
     renderApp();
     return;
   }
@@ -6725,30 +6151,6 @@ function handleSubmit(event){
       toast('Проверьте обязательные поля этапа и диапазон дат.', 'danger');
       return;
     }
-
-    let draftAssignments = [];
-    const rawDrafts = String(formData.get('assignmentDraftsJson') || '[]');
-    try {
-      draftAssignments = normalizeStageAssignmentDrafts(JSON.parse(rawDrafts), payload).filter((draft) => draft.employeeId);
-    } catch (error) {
-      toast('Не удалось прочитать назначения в форме этапа.', 'danger');
-      return;
-    }
-
-    const duplicateEmployeeIds = draftAssignments
-      .map((draft) => draft.employeeId)
-      .filter((employeeId, index, array) => array.indexOf(employeeId) !== index);
-    if (duplicateEmployeeIds.length) {
-      toast('В одном этапе нельзя сохранить две строки на одного и того же сотрудника.', 'danger');
-      return;
-    }
-
-    const invalidDraft = draftAssignments.find((draft) => !draft.startDate || !draft.endDate || draft.startDate > draft.endDate);
-    if (invalidDraft) {
-      toast('Проверьте даты участия у назначенных сотрудников.', 'danger');
-      return;
-    }
-
     if (!payload.id) {
       payload.id = makeId('S', appData.stages);
       appData.stages.push(payload);
@@ -6756,10 +6158,7 @@ function handleSubmit(event){
       const index = appData.stages.findIndex((item) => item.id === payload.id);
       if (index >= 0) appData.stages[index] = payload;
     }
-
-    syncStageAssignments(payload.id, draftAssignments, payload);
-
-    saveData(`Этап сохранён. Назначений внутри этапа: ${draftAssignments.length}`);
+    saveData('Этап сохранён');
     closeModal();
     ui.projectId = payload.projectId;
     navigate('project', { projectId: payload.projectId, projectTab: 'stages' });
@@ -6845,6 +6244,22 @@ function handleSubmit(event){
       closeModal();
       renderApp();
     }
+    return;
+  }
+
+  if (formType === 'employee-substitutions') {
+    const formData = new FormData(form);
+    const employeeId = String(formData.get('employeeId') || '');
+    const employee = appData.employees.find((item) => item.id === employeeId);
+    if (!employee) {
+      toast('Сотрудник не найден.', 'danger');
+      return;
+    }
+    employee.substituteForEmployeeIds = unique(formData.getAll('substituteForEmployeeIds').map(String).filter((targetId) => targetId && targetId !== employeeId));
+    employee.substituteNote = String(formData.get('substituteNote') || '').trim();
+    saveData('Матрица подмены сохранена');
+    closeModal();
+    renderApp();
     return;
   }
 
