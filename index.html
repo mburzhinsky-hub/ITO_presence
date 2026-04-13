@@ -595,9 +595,10 @@ const INITIAL_DATA = {
     },
     {
       "id": "П-004",
-      "name": "Лужники",
+      "name": "Позиция 4 — свободна",
       "priority": "Низкий",
-      "status": "Активный"
+      "status": "Пауза",
+      "isPlaceholder": true
     },
     {
       "id": "П-005",
@@ -637,10 +638,9 @@ const INITIAL_DATA = {
     },
     {
       "id": "П-011",
-      "name": "Позиция 11 — не заполнена в Excel",
+      "name": "Лужники",
       "priority": "Низкий",
-      "status": "Пауза",
-      "isPlaceholder": true
+      "status": "Активный"
     },
     {
       "id": "П-012",
@@ -1171,7 +1171,7 @@ const INITIAL_DATA = {
     },
     {
       "id": "S011",
-      "projectId": "П-004",
+      "projectId": "П-011",
       "name": "Обслуживание",
       "priority": "Низкий",
       "startDate": "2026-01-01",
@@ -2176,6 +2176,73 @@ function projectOptionLabel(project){
   return `${projectDisplayLabel(project)} • ${project.id} • ${project.name}`;
 }
 
+function makePlaceholderProject(projectId){
+  const normalizedId = normalizeProjectCode(projectId) || projectId;
+  const number = projectCodeNumber(normalizedId);
+  return {
+    id: normalizedId,
+    name: `Позиция ${number || normalizedId} — свободна`,
+    priority: 'Низкий',
+    status: 'Пауза',
+    displayIndex: number || undefined,
+    isPlaceholder: true
+  };
+}
+
+function projectLooksPlaceholder(project){
+  if (!project) return true;
+  if (project.isPlaceholder) return true;
+  const text = normalizeSearchText(project.name);
+  return !text || text.includes('не заполнена') || text.includes('свободна') || text.includes('пустая позиция');
+}
+
+function normalizeProjectCode(value){
+  const raw = String(value ?? '').trim().toUpperCase();
+  if (!raw) return '';
+  const digits = raw.match(/\d+/)?.[0];
+  if (digits) return `П-${digits.padStart(3, '0')}`;
+  return raw;
+}
+
+function getNextProjectCode(projects = appData?.projects || []){
+  const placeholder = ensureArray(projects).slice().sort((left, right) => projectSortOrder(left) - projectSortOrder(right)).find((project) => projectLooksPlaceholder(project));
+  if (placeholder) return placeholder.id;
+  const maxNumber = Math.max(0, ...ensureArray(projects).map((project) => projectCodeNumber(project.id)).filter(Boolean));
+  return `П-${String(maxNumber + 1).padStart(3, '0')}`;
+}
+
+function applyProjectSlotFixes(data){
+  const project4 = ensureArray(data.projects).find((project) => project.id === 'П-004');
+  let project11 = ensureArray(data.projects).find((project) => project.id === 'П-011');
+  const project4IsLuzhniki = normalizeSearchText(project4?.name) === 'лужники';
+  const project11IsLuzhniki = normalizeSearchText(project11?.name) === 'лужники';
+  const project11IsPlaceholder = !project11 || projectLooksPlaceholder(project11);
+
+  if (project4IsLuzhniki && !project11IsLuzhniki && project11IsPlaceholder) {
+    if (!project11) {
+      project11 = { id: 'П-011', name: 'Лужники', priority: project4.priority || 'Низкий', status: project4.status || 'Активный' };
+      data.projects.push(project11);
+    } else {
+      project11.name = 'Лужники';
+      project11.priority = project4.priority || project11.priority || 'Низкий';
+      project11.status = project4.status || project11.status || 'Активный';
+      delete project11.isPlaceholder;
+    }
+
+    ensureArray(data.stages).forEach((stage) => {
+      if (stage.projectId === 'П-004') stage.projectId = 'П-011';
+    });
+
+    if (project4) {
+      const replacement = makePlaceholderProject('П-004');
+      project4.name = replacement.name;
+      project4.priority = replacement.priority;
+      project4.status = replacement.status;
+      project4.isPlaceholder = true;
+    }
+  }
+}
+
 
 function loadStoredData(){
   try {
@@ -2359,6 +2426,9 @@ function normalizeData(raw){
         comment: stage.comment || ''
       };
     });
+
+  applyProjectSlotFixes(data);
+  data.projects = ensureProjectSequence(data.projects);
 
   data.assignments = ensureArray(data.assignments)
     .filter((assignment) => assignment && assignment.id)
@@ -3329,15 +3399,23 @@ function renderProjectsView(){
           </select>
         </div>
       </div>
+      <div class="toolbar" style="margin-top:14px;">
+        <div class="toolbar__group">
+          <div class="mini-note">Теперь карточки проектов можно править прямо на странице: менять название, статус и приоритет, а также добавлять новые проекты.</div>
+        </div>
+        <div class="toolbar__group">
+          <button class="btn btn-primary" data-action="add-project">Добавить проект</button>
+        </div>
+      </div>
     </section>
     <section class="callout callout--blue">
       <div class="callout__title">Как пользоваться проще всего</div>
-      <div>1) откройте нужный проект; 2) на вкладке «Этапы проекта» проверьте сроки и состав; 3) на вкладке «Назначения на этапы» добавьте людей; 4) на вкладках «Гант проекта» и «Загрузка сотрудников по проекту» сразу видно, где есть риск.</div>
+      <div>1) при необходимости сначала поправьте карточку проекта кнопкой «Изменить проект»; 2) откройте нужный проект; 3) на вкладке «Этапы проекта» проверьте сроки и состав; 4) на вкладке «Назначения на этапы» добавьте людей; 5) на вкладках «Гант проекта» и «Загрузка сотрудников по проекту» сразу видно, где есть риск.</div>
     </section>
     ${placeholderProjects.length ? `
       <section class="callout callout--yellow">
-        <div class="callout__title">Нумерация проектов 1–16 сохранена</div>
-        <div>В исходном Excel диапазон кодов идёт до 16, но позиция 11 не заполнена. Она оставлена в интерфейсе как пустая карточка, чтобы порядок проектов не сбивался и свободное место было видно сразу.</div>
+        <div class="callout__title">Свободные позиции по кодам проектов сохранены</div>
+        <div>Если в диапазоне кодов есть пустая позиция, она остаётся видимой отдельной карточкой. Её можно сразу заполнить через кнопку «Изменить проект» на карточке, не лезя в код.</div>
       </section>
     ` : ''}
   `;
@@ -3400,9 +3478,12 @@ function renderProjectsView(){
               <div class="chip-row">
                 ${participantNames.length ? participantNames.map((name) => chip(name, 'outline')).join('') : chip(project.isPlaceholder ? 'Пока без данных' : 'Сотрудники пока не назначены', 'neutral')}
               </div>
-              <div class="flex-between">
+              <div class="flex-between wrap">
                 <div class="mini-note">Коротко: нехватка людей — ${metrics.shortageStages.length}, ролевые дефициты — ${metrics.roleGapStages.length}, этапы на одном человеке — ${metrics.singleOwnerStages.length}.</div>
-                <button class="btn btn-primary" data-action="open-project" data-project-id="${esc(project.id)}">Открыть проект</button>
+                <div class="btn-group">
+                  <button class="btn btn-small" data-action="edit-project" data-project-id="${esc(project.id)}">${project.isPlaceholder ? 'Заполнить проект' : 'Изменить проект'}</button>
+                  <button class="btn btn-primary" data-action="open-project" data-project-id="${esc(project.id)}">Открыть проект</button>
+                </div>
               </div>
             </article>
           `;
@@ -3481,6 +3562,7 @@ function renderProjectView(projectId){
         <div class="callout callout--blue">
           <div class="callout__title">Быстрые действия без лишних переходов</div>
           <div class="btn-group" style="margin-top:10px;">
+            <button class="btn" data-action="edit-project" data-project-id="${esc(project.id)}">Изменить проект</button>
             <button class="btn btn-primary" data-action="add-stage" data-project-id="${esc(project.id)}">Добавить этап и сразу назначить людей</button>
             <button class="btn" data-action="bulk-assign" ${metrics.stageCount ? '' : 'disabled'}>Назначить людей</button>
             <button class="btn" data-action="project-tab" data-project-tab="gantt">Открыть гант</button>
@@ -3490,8 +3572,8 @@ function renderProjectView(projectId){
         </div>
         ${project.isPlaceholder ? `
           <div class="callout callout--yellow">
-            <div class="callout__title">Пустая позиция в диапазоне 1–16</div>
-            <div>Эта карточка оставлена намеренно, потому что в исходном Excel кодовой диапазон проектов идёт до 16. Позиция 11 сейчас свободна.</div>
+            <div class="callout__title">Свободная позиция по коду проекта</div>
+            <div>${projectDisplayLabel(project)} сейчас не заполнен. Нажмите «Изменить проект», чтобы задать название, статус и приоритет прямо в интерфейсе.</div>
           </div>
         ` : ''}
         <div class="tabs">
@@ -5649,6 +5731,72 @@ function syncStageAssignments(stageId, rawDrafts, stageDefaults){
     .concat(syncedAssignments);
 }
 
+function openProjectModal(projectId = null){
+  const project = projectId ? appData.projects.find((item) => item.id === projectId) : null;
+  const linkedStagesCount = project ? appData.stages.filter((stage) => stage.projectId === project.id).length : 0;
+  const allowCodeChange = !project || project.isPlaceholder || linkedStagesCount === 0;
+  const base = {
+    originalId: project?.id || '',
+    projectId: project?.id || getNextProjectCode(appData.projects),
+    name: project?.isPlaceholder ? '' : (project?.name || ''),
+    priority: project?.priority || 'Средний',
+    status: project?.status || 'Активный'
+  };
+
+  const content = `
+    <form data-form="project" class="flex-col" style="gap:18px;">
+      <input type="hidden" name="originalId" value="${esc(base.originalId)}" />
+      <input type="hidden" name="allowCodeChange" value="${allowCodeChange ? '1' : '0'}" />
+      <div class="callout callout--blue">
+        <div class="callout__title">Теперь проектами можно управлять прямо на странице</div>
+        <div>Можно ввести просто число, например <strong>11</strong>, и код автоматически сохранится как <strong>П-011</strong>. Если у проекта уже есть этапы, код блокируется, чтобы не ломать связи.</div>
+      </div>
+      <div class="form-grid form-grid--3">
+        <div class="field">
+          <label>Код проекта</label>
+          <input name="projectId" class="input" value="${esc(base.projectId)}" placeholder="Например, 11 или П-011" ${allowCodeChange ? '' : 'readonly'} required />
+        </div>
+        <div class="field field--full">
+          <label>Название проекта</label>
+          <input name="name" class="input" value="${esc(base.name)}" placeholder="Например, Лужники" required />
+        </div>
+        <div class="field">
+          <label>Приоритет</label>
+          <select name="priority" class="select">
+            ${['Высокий', 'Средний', 'Низкий'].map((priority) => `<option value="${esc(priority)}" ${base.priority === priority ? 'selected' : ''}>${esc(priority)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Статус проекта</label>
+          <select name="status" class="select">
+            ${appData.projectStatuses.map((status) => `<option value="${esc(status)}" ${base.status === status ? 'selected' : ''}>${esc(status)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field field--full">
+          <div class="mini-note">${project
+            ? (linkedStagesCount
+                ? `К этому проекту уже привязано этапов: ${linkedStagesCount}. Название, статус и приоритет можно менять свободно.`
+                : 'У проекта пока нет этапов. При необходимости можно изменить и код проекта.')
+            : 'Для нового проекта можно занять свободную позицию или указать следующий код вручную.'}</div>
+        </div>
+      </div>
+      <div class="modal__footer" style="padding:0;border-top:none;">
+        <div class="mini-note">После сохранения проект сразу появится на главном экране и откроется его карточка.</div>
+        <div class="btn-group">
+          <button type="button" class="btn" data-action="close-modal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить проект</button>
+        </div>
+      </div>
+    </form>
+  `;
+
+  openModal({
+    title: project ? 'Изменение проекта' : 'Добавление проекта',
+    subtitle: project ? `${project.id} • ${project.name || 'без названия'}` : 'Карточка проекта: код, название, приоритет и статус',
+    content
+  });
+}
+
 function openStageModal(stageId = null, projectId = ui.projectId){
   const stage = stageId ? appData.stages.find((item) => item.id === stageId) : null;
   const base = stage ? { ...stage } : {
@@ -6554,6 +6702,12 @@ function handleClick(event){
         resetDataToInitial();
       }
       return;
+    case 'add-project':
+      openProjectModal();
+      return;
+    case 'edit-project':
+      openProjectModal(actionTarget.dataset.projectId || ui.projectId);
+      return;
     case 'add-stage':
       openStageModal(null, actionTarget.dataset.projectId || ui.projectId);
       return;
@@ -6700,6 +6854,80 @@ function handleSubmit(event){
     });
     saveData('Статусы присутствия обновлены');
     renderApp();
+    return;
+  }
+
+  if (formType === 'project') {
+    const formData = new FormData(form);
+    const originalId = String(formData.get('originalId') || '');
+    const allowCodeChange = String(formData.get('allowCodeChange') || '0') === '1';
+    const submittedCode = normalizeProjectCode(formData.get('projectId'));
+    const projectId = originalId && !allowCodeChange ? originalId : submittedCode;
+    const payload = {
+      id: projectId,
+      name: String(formData.get('name') || '').trim(),
+      priority: String(formData.get('priority') || 'Средний'),
+      status: String(formData.get('status') || 'Активный'),
+      isPlaceholder: false
+    };
+
+    if (!payload.id || !/^П-\d{3}$/.test(payload.id)) {
+      toast('Код проекта должен быть в формате П-011. Можно просто ввести 11.', 'danger');
+      return;
+    }
+    if (!payload.name) {
+      toast('Введите название проекта.', 'danger');
+      return;
+    }
+
+    const originalIndex = originalId ? appData.projects.findIndex((project) => project.id === originalId) : -1;
+    const targetIndex = appData.projects.findIndex((project) => project.id === payload.id);
+
+    if (originalId) {
+      if (originalIndex < 0) {
+        toast('Не удалось найти проект для изменения.', 'danger');
+        return;
+      }
+      const currentProject = appData.projects[originalIndex];
+      if (payload.id !== originalId && appData.stages.some((stage) => stage.projectId === originalId)) {
+        toast('Код проекта нельзя менять, пока к нему привязаны этапы. Измените только название, статус или приоритет.', 'danger');
+        return;
+      }
+      if (targetIndex >= 0 && targetIndex !== originalIndex && !appData.projects[targetIndex].isPlaceholder) {
+        toast('Проект с таким кодом уже существует.', 'danger');
+        return;
+      }
+
+      if (payload.id !== originalId && targetIndex >= 0 && targetIndex !== originalIndex && appData.projects[targetIndex].isPlaceholder) {
+        appData.projects[targetIndex] = { ...appData.projects[targetIndex], ...payload };
+        appData.projects[originalIndex] = makePlaceholderProject(originalId);
+      } else {
+        appData.projects[originalIndex] = { ...currentProject, ...payload };
+      }
+
+      if (payload.id !== originalId) {
+        appData.stages.forEach((stage) => {
+          if (stage.projectId === originalId) stage.projectId = payload.id;
+        });
+      }
+    } else {
+      if (targetIndex >= 0 && !appData.projects[targetIndex].isPlaceholder) {
+        toast('Проект с таким кодом уже существует.', 'danger');
+        return;
+      }
+      if (targetIndex >= 0 && appData.projects[targetIndex].isPlaceholder) {
+        appData.projects[targetIndex] = { ...appData.projects[targetIndex], ...payload };
+      } else {
+        appData.projects.push(payload);
+      }
+    }
+
+    appData.projects = ensureProjectSequence(appData.projects);
+    ui.projectId = payload.id;
+    ui.projectTab = 'stages';
+    saveData(originalId ? 'Проект сохранён' : 'Проект добавлен');
+    closeModal();
+    navigate('project', { projectId: payload.id, projectTab: 'stages' });
     return;
   }
 
